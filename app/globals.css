@@ -24,3 +24,43 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* 🔁 Marquee Animation */
+@keyframes marqueeTrack {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-track {
+  animation: marqueeTrack 30s linear infinite;
+}
+
+
+/* 🔔 Panic Shake Animation (every 5s) */
+@keyframes jump-cycle {
+  0%, 71.4%, 100% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.05);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  85% {
+    transform: scale(1.05);
+  }
+  90%, 100% {
+    transform: scale(1);
+  }
+}
+
+.jump-text {
+  animation: jump-cycle 7s ease-in-out infinite;
+}
+
+
