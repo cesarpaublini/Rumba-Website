@@ -145,21 +145,24 @@ export default function Hero() {
           />
         </div>
       </section>
-{/* Booking Card - Mobile */}
+{/* Booking Card - Mobile Drawer Style */}
 <div
   className={`fixed bottom-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out transform ${
     showMobileCard ? 'translate-y-0' : 'translate-y-full'
-  } bg-white shadow-xl rounded-t-3xl overflow-y-auto h-[90vh] lg:hidden`}
+  } bg-white h-[90vh] rounded-t-3xl shadow-xl overflow-y-auto lg:hidden`}
 >
-  <div className="p-4">
+  <div className="sticky top-0 bg-white z-10 px-4 pt-4">
     <button
       onClick={() => setShowMobileCard(false)}
-      className="text-sm text-gray-600 underline mb-3"
+      className="text-sm text-gray-600 underline"
     >
       Close
     </button>
+  </div>
 
+  <div className="px-4 pb-6">
     <BookingCard
+      isMobile={true}
       date={date}
       setDate={setDate}
       duration={duration}
@@ -191,6 +194,7 @@ export default function Hero() {
     />
   </div>
 </div>
+
 
       {/* Marquee Banner */}
       <div className="bg-black overflow-hidden py-3">
