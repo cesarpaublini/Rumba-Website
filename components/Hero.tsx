@@ -149,8 +149,9 @@ export default function Hero() {
 <div
   className={`fixed bottom-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out transform ${
     showMobileCard ? 'translate-y-0' : 'translate-y-full'
-  } bg-white h-[90vh] rounded-t-3xl shadow-xl overflow-y-auto lg:hidden`}
+  } bg-white shadow-2xl rounded-t-3xl max-h-[85vh] mt-[15vh] overflow-y-auto pt-6 px-4 lg:hidden`}
 >
+
   <div className="sticky top-0 bg-white z-10 px-4 pt-4">
     <button
       onClick={() => setShowMobileCard(false)}
