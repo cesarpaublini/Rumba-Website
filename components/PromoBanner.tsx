@@ -46,7 +46,7 @@ const PromoBanner = () => {
   if (!visible) return null;
 
   return (
-    <div className="w-full sticky top-0 z-50">
+    <div className="w-full sticky top-0 z-10">
       <div className="bg-pink-600 text-white text-center text-sm font-semibold py-2 px-4 flex items-center justify-center overflow-x-auto whitespace-nowrap">
         <div className="jump-text inline-flex items-center">
           🎉 Book now and get
