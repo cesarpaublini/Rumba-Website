@@ -64,6 +64,16 @@ export default function Hero() {
 
   return (
     <>
+      {/* Marquee Banner */}
+      <div className="bg-black overflow-hidden py-3">
+        <div className="marquee text-white text-sm font-semibold tracking-wide flex gap-16 whitespace-nowrap">
+          <span className="px-8">2-Hour Tour • Up to 30 Guests • Book Instantly • Premium Sound System</span>
+          <span className="px-8">2-Hour Tour • Up to 30 Guests • Book Instantly • Premium Sound System</span>
+          <span className="px-8">2-Hour Tour • Up to 30 Guests • Book Instantly • Premium Sound System</span>
+        </div>
+      </div>
+
+      {/* Hero Section */}
       <section className="relative min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] w-full overflow-hidden">
         {/* Background Video */}
         <div className="absolute inset-0 z-0">
@@ -89,7 +99,7 @@ export default function Hero() {
           </video>
         </div>
 
-        {/* Overlay for Mobile Text */}
+        {/* Overlay Text - Mobile */}
         <div className="absolute inset-0 bg-black/50 lg:hidden z-10 flex items-center justify-center text-center px-4">
           <div className="relative z-10 max-w-xl">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-md leading-tight">
@@ -145,75 +155,63 @@ export default function Hero() {
           />
         </div>
       </section>
-{/* Booking Card - Mobile Drawer Style */}
-<div
-  className={`fixed bottom-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out transform ${
-    showMobileCard ? 'translate-y-0' : 'translate-y-full'
-  } bg-white h-[90vh] rounded-t-3xl shadow-xl overflow-y-auto lg:hidden`}
->
-  <div className="sticky top-0 bg-white z-10 px-4 pt-4">
-    <button
-      onClick={() => setShowMobileCard(false)}
-      className="text-sm text-gray-600 underline"
-    >
-      Close
-    </button>
-  </div>
 
-  <div className="px-4 pb-6">
-    <BookingCard
-      isMobile={true}
-      date={date}
-      setDate={setDate}
-      duration={duration}
-      setDuration={setDuration}
-      startTime={startTime}
-      setStartTime={setStartTime}
-      price={price}
-      setPrice={setPrice}
-      step={step}
-      setStep={setStep}
-      guests={guests}
-      setGuests={setGuests}
-      occasion={occasion}
-      setOccasion={setOccasion}
-      pickup={pickup}
-      setPickup={setPickup}
-      dropoff={dropoff}
-      setDropoff={setDropoff}
-      travelFee={travelFee}
-      setTravelFee={setTravelFee}
-      showCalendar={showCalendar}
-      setShowCalendar={setShowCalendar}
-      showDurationOptions={showDurationOptions}
-      setShowDurationOptions={setShowDurationOptions}
-      showTimeOptions={showTimeOptions}
-      setShowTimeOptions={setShowTimeOptions}
-      pickupRef={pickupRef}
-      dropoffRef={dropoffRef}
-    />
-  </div>
-</div>
-
-
-      {/* Marquee Banner */}
-      <div className="bg-black overflow-hidden py-3">
-        <div className="marquee text-white text-sm font-semibold tracking-wide flex gap-16">
-          <span className="px-8">2-Hour Tour • Up to 30 Guests • Book Instantly • Premium Sound System</span>
-          <span className="px-8">2-Hour Tour • Up to 30 Guests • Book Instantly • Premium Sound System</span>
-          <span className="px-8">2-Hour Tour • Up to 30 Guests • Book Instantly • Premium Sound System</span>
+      {/* Booking Card - Mobile */}
+      <div
+        className={`fixed bottom-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out transform ${
+          showMobileCard ? 'translate-y-0' : 'translate-y-full'
+        } bg-white shadow-2xl rounded-t-3xl max-h-[90vh] overflow-y-auto pt-6 lg:hidden`}
+      >
+        <button
+          onClick={() => setShowMobileCard(false)}
+          className="absolute top-3 right-4 text-sm text-gray-600 underline z-10"
+        >
+          Close
+        </button>
+        <div className="px-4 pb-6">
+          <BookingCard
+            isMobile={true}
+            date={date}
+            setDate={setDate}
+            duration={duration}
+            setDuration={setDuration}
+            startTime={startTime}
+            setStartTime={setStartTime}
+            price={price}
+            setPrice={setPrice}
+            step={step}
+            setStep={setStep}
+            guests={guests}
+            setGuests={setGuests}
+            occasion={occasion}
+            setOccasion={setOccasion}
+            pickup={pickup}
+            setPickup={setPickup}
+            dropoff={dropoff}
+            setDropoff={setDropoff}
+            travelFee={travelFee}
+            setTravelFee={setTravelFee}
+            showCalendar={showCalendar}
+            setShowCalendar={setShowCalendar}
+            showDurationOptions={showDurationOptions}
+            setShowDurationOptions={setShowDurationOptions}
+            showTimeOptions={showTimeOptions}
+            setShowTimeOptions={setShowTimeOptions}
+            pickupRef={pickupRef}
+            dropoffRef={dropoffRef}
+          />
         </div>
       </div>
 
+      {/* Scoped style for Marquee */}
       <style jsx>{`
         .marquee {
-          white-space: nowrap;
           animation: marquee-track 30s linear infinite;
         }
 
         @media (max-width: 640px) {
           .marquee {
-            animation-duration: 15s; /* Faster on mobile */
+            animation-duration: 15s;
           }
         }
 
