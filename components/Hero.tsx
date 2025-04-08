@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
-import BookingCard from './BookingCard'; // Import the new component
+import BookingCard from './BookingCard';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { format } from 'date-fns';
@@ -30,7 +30,6 @@ export default function Hero() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (durationRef.current && event.target instanceof Node && !durationRef.current.contains(event.target)) {
-
         setShowDurationOptions(false);
       }
       if (timeRef.current instanceof HTMLDivElement && !timeRef.current.contains(event.target as Node)) {
@@ -113,37 +112,82 @@ export default function Hero() {
         </div>
 
         {/* Booking Card - Desktop */}
-        <BookingCard
-          date={date}
-          setDate={setDate}
-          duration={duration}
-          setDuration={setDuration}
-          startTime={startTime}
-          setStartTime={setStartTime}
-          price={price}
-          setPrice={setPrice}
-          step={step}
-          setStep={setStep}
-          guests={guests}
-          setGuests={setGuests}
-          occasion={occasion}
-          setOccasion={setOccasion}
-          pickup={pickup}
-          setPickup={setPickup}
-          dropoff={dropoff}
-          setDropoff={setDropoff}
-          travelFee={travelFee}
-          setTravelFee={setTravelFee}
-          showCalendar={showCalendar}
-          setShowCalendar={setShowCalendar}
-          showDurationOptions={showDurationOptions}
-          setShowDurationOptions={setShowDurationOptions}
-          showTimeOptions={showTimeOptions}
-          setShowTimeOptions={setShowTimeOptions}
-          pickupRef={pickupRef}
-          dropoffRef={dropoffRef}
-        />
+        <div className="hidden lg:block">
+          <BookingCard
+            date={date}
+            setDate={setDate}
+            duration={duration}
+            setDuration={setDuration}
+            startTime={startTime}
+            setStartTime={setStartTime}
+            price={price}
+            setPrice={setPrice}
+            step={step}
+            setStep={setStep}
+            guests={guests}
+            setGuests={setGuests}
+            occasion={occasion}
+            setOccasion={setOccasion}
+            pickup={pickup}
+            setPickup={setPickup}
+            dropoff={dropoff}
+            setDropoff={setDropoff}
+            travelFee={travelFee}
+            setTravelFee={setTravelFee}
+            showCalendar={showCalendar}
+            setShowCalendar={setShowCalendar}
+            showDurationOptions={showDurationOptions}
+            setShowDurationOptions={setShowDurationOptions}
+            showTimeOptions={showTimeOptions}
+            setShowTimeOptions={setShowTimeOptions}
+            pickupRef={pickupRef}
+            dropoffRef={dropoffRef}
+          />
+        </div>
       </section>
+
+      {/* Booking Card - Mobile */}
+      <div className={`fixed bottom-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out ${showMobileCard ? 'translate-y-0' : 'translate-y-full'} bg-white shadow-xl rounded-t-3xl overflow-y-auto max-h-[90vh] lg:hidden`}>
+        <div className="p-4">
+          <button
+            className="text-gray-600 text-sm underline mb-3"
+            onClick={() => setShowMobileCard(false)}
+          >
+            Close
+          </button>
+
+          <BookingCard
+            date={date}
+            setDate={setDate}
+            duration={duration}
+            setDuration={setDuration}
+            startTime={startTime}
+            setStartTime={setStartTime}
+            price={price}
+            setPrice={setPrice}
+            step={step}
+            setStep={setStep}
+            guests={guests}
+            setGuests={setGuests}
+            occasion={occasion}
+            setOccasion={setOccasion}
+            pickup={pickup}
+            setPickup={setPickup}
+            dropoff={dropoff}
+            setDropoff={setDropoff}
+            travelFee={travelFee}
+            setTravelFee={setTravelFee}
+            showCalendar={showCalendar}
+            setShowCalendar={setShowCalendar}
+            showDurationOptions={showDurationOptions}
+            setShowDurationOptions={setShowDurationOptions}
+            showTimeOptions={showTimeOptions}
+            setShowTimeOptions={setShowTimeOptions}
+            pickupRef={pickupRef}
+            dropoffRef={dropoffRef}
+          />
+        </div>
+      </div>
 
       {/* Marquee Banner */}
       <div className="bg-black overflow-hidden py-3">
