@@ -47,17 +47,16 @@ const PromoBanner = () => {
 
   return (
     <div className="w-full sticky top-0 z-50">
-      <div className="bg-pink-600 text-white text-center text-sm font-semibold py-2 px-4 flex items-center justify-center">
-        <div className="jump-text">
-          🎉 Book now and get{" "}
-          <span className="font-bold text-white px-1">$100 OFF</span> – Offer ends in{" "}
+      <div className="bg-pink-600 text-white text-center text-sm font-semibold py-2 px-4 flex items-center justify-center overflow-x-auto whitespace-nowrap">
+        <div className="jump-text inline-flex items-center">
+          🎉 Book now and get
+          <span className="font-bold text-white px-1">$100 OFF</span> – Offer ends in
           <span className="font-mono px-1">{formatTime(timeLeft)}</span>
         </div>
       </div>
     </div>
   );
-  
-  
+    
 };
 
 export default PromoBanner;
