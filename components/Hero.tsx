@@ -6,26 +6,8 @@ import BookingCard from './BookingCard'; // Import the new component
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { format } from 'date-fns';
-import { Autocomplete } from '@react-google-maps/api';
-
-// Add haversine distance calculation
-const haversineDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
-  const R = 3958.8; // Radius of Earth in miles
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(lat1 * Math.PI / 180) *
-    Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon / 2) ** 2;
-
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-};
 
 export default function Hero() {
-  // Add Wynwood coordinates
-  const wynwoodCoords = { lat: 25.8011, lng: -80.1996 };
-
   const [date, setDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
   const [duration, setDuration] = useState(2);
@@ -40,10 +22,10 @@ export default function Hero() {
   const [pickup, setPickup] = useState('');
   const [dropoff, setDropoff] = useState('');
   const [travelFee, setTravelFee] = useState(0);
-  const durationRef = useRef(null);
-  const timeRef = useRef(null);
-  const pickupRef = useRef<any>(null);
-  const dropoffRef = useRef<any>(null);
+  const durationRef = useRef<HTMLDivElement | null>(null);
+  const timeRef = useRef<HTMLDivElement | null>(null);
+  const pickupRef = useRef<HTMLInputElement>(null);
+  const dropoffRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,7 +33,7 @@ export default function Hero() {
 
         setShowDurationOptions(false);
       }
-      if (timeRef.current && !timeRef.current.contains(event.target as Node | null)) {
+      if (timeRef.current instanceof HTMLDivElement && !timeRef.current.contains(event.target as Node)) {
         setShowTimeOptions(false);
       }
     };
@@ -160,7 +142,6 @@ export default function Hero() {
           setShowTimeOptions={setShowTimeOptions}
           pickupRef={pickupRef}
           dropoffRef={dropoffRef}
-          wynwoodCoords={wynwoodCoords}
         />
       </section>
 

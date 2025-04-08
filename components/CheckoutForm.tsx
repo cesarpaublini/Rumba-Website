@@ -25,7 +25,7 @@ export default function CheckoutForm() {
     try {
       const { error: submitError } = await elements.submit();
       if (submitError) {
-        setError(submitError.message);
+        setError(submitError.message ?? 'Something went wrong.');
         return;
       }
 
@@ -44,7 +44,7 @@ export default function CheckoutForm() {
       });
 
       if (confirmError) {
-        setError(confirmError.message);
+        setError(confirmError.message ?? 'Something went wrong.');
       }
     } catch (err) {
       setError('An error occurred while processing your payment.');

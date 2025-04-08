@@ -6,6 +6,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
 
 interface BookingCardProps {
   date: Date;
@@ -34,6 +35,8 @@ interface BookingCardProps {
   setShowDurationOptions: (show: boolean) => void;
   showTimeOptions: boolean;
   setShowTimeOptions: (show: boolean) => void;
+  pickupRef: React.RefObject<HTMLInputElement>;
+  dropoffRef: React.RefObject<HTMLInputElement>;
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
@@ -55,6 +58,8 @@ const BookingCard: React.FC<BookingCardProps> = ({
   setPickup,
   dropoff,
   setDropoff,
+  pickupRef,
+  dropoffRef,
   travelFee,
   setTravelFee,
   showCalendar,
@@ -230,6 +235,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
               className="w-full border rounded-md py-2 px-3"
               value={pickup}
               onChange={(e) => setPickup(e.target.value)}
+              ref={pickupRef}
               placeholder="Enter pickup location"
             />
           </div>
@@ -241,6 +247,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
               className="w-full border rounded-md py-2 px-3"
               value={dropoff}
               onChange={(e) => setDropoff(e.target.value)}
+              ref={dropoffRef}
               placeholder="Enter drop-off location"
             />
           </div>

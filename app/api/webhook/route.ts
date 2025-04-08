@@ -1,52 +1,39 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { buffer } from 'micro';
+import { NextRequest } from 'next/server';
 import Stripe from 'stripe';
 
-// Initialize Stripe with your secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2020-08-27',
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
-export const config = {
-  api: {
-    bodyParser: false, // Stripe requires the body to be raw
-  },
-};
+export async function POST(req: NextRequest) {
+  const sig = req.headers.get('stripe-signature');
+  const body = await req.text(); // Raw body needed for Stripe
 
-const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const sig = req.headers['stripe-signature'];
-
-  let event;
+  let event: Stripe.Event;
 
   try {
-    // Construct the event from the request body and signature
-    event = stripe.webhooks.constructEvent(await buffer(req), sig!, endpointSecret);
-  } catch (err) {
-    console.error('Error while verifying webhook signature:', err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    event = stripe.webhooks.constructEvent(body, sig!, endpointSecret);
+  } catch (err: any) {
+    console.error('⚠️  Webhook error:', err.message);
+    return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }
 
-  // Handle the event
+  // ✅ Handle events
   switch (event.type) {
     case 'payment_intent.succeeded':
-      const paymentIntent = event.data.object;
-      console.log(`PaymentIntent for ${paymentIntent.amount_received} was successful!`);
-      // Handle successful payment, update your database, etc.
+      const intent = event.data.object as Stripe.PaymentIntent;
+      console.log(`✅ Payment for ${intent.amount} succeeded.`);
       break;
-    case 'payment_intent.failed':
-      const paymentFailed = event.data.object;
-      console.log('Payment failed:', paymentFailed);
-      // Handle failed payment, notify the user, etc.
+    case 'payment_intent.payment_failed':
+      const failedIntent = event.data.object as Stripe.PaymentIntent;
+      console.log(`❌ Payment failed:`, failedIntent);
       break;
-    // Add more cases for other events as needed
     default:
-      console.log(`Unhandled event type: ${event.type}`);
+      console.log(`ℹ️  Unhandled event type: ${event.type}`);
   }
 
-  // Respond with a 200 status code to acknowledge receipt of the event
-  res.status(200).json({ received: true });
-};
+  return new Response(JSON.stringify({ received: true }), { status: 200 });
+}
 
-export default webhookHandler;
+// Required in App Router to prevent static optimization
+export const dynamic = 'force-dynamic';
