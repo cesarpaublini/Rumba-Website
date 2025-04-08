@@ -75,49 +75,74 @@ export default function CheckoutPage() {
 
   return (
     <StripeWrapper clientSecret={clientSecret}>
-      <main className="min-h-screen bg-[#f1f2f4] py-10 px-4">
-        <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* LEFT SIDE */}
-          <div className="lg:col-span-2 space-y-6">
-            <h1 className="text-2xl font-bold text-gray-900">Checkout</h1>
-            
-            <div className="border rounded-lg p-4 bg-gray-100 space-y-2 text-gray-700 text-sm">
-              <p><span className="text-base">📅</span> <strong>Date:</strong> {formattedDate}</p>
-              <p><span className="text-base">⏰</span> <strong>Time:</strong> {formattedTime}</p>
-              <p><span className="text-base">🕓</span> <strong>Duration:</strong> {duration} hours</p>
-              <p><span className="text-base">👥</span> <strong>Guests:</strong> {guests}</p>
-              <p><span className="text-base">🎉</span> <strong>Occasion:</strong> {occasion}</p>
-              <p><span className="text-base">📍</span> <strong>Pickup:</strong> {pickup}</p>
-              <p><span className="text-base">📍</span> <strong>Dropoff:</strong> {dropoff}</p>
-            </div>
-
-            <CheckoutForm />
+  <main className="min-h-screen bg-[#f1f2f4] py-10 px-4">
+    <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      {/* ✅ MOBILE PRICING BOX - top and hidden on desktop */}
+      <div className="block lg:hidden border rounded-lg bg-gray-50 p-6 h-fit">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">Pricing Information</h2>
+        <div className="space-y-2 text-sm text-gray-800">
+          <div className="flex justify-between">
+            <span>Base Price</span>
+            <span>${Number(price) - Number(travelFee)}</span>
           </div>
-
-          {/* RIGHT SIDE */}
-          <div className="border rounded-lg bg-gray-50 p-6 h-fit">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Pricing Information</h2>
-            <div className="space-y-2 text-sm text-gray-800">
-              <div className="flex justify-between">
-                <span>Base Price</span>
-                <span>${Number(price) - Number(travelFee)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Travel Fee</span>
-                <span>${travelFee}</span>
-              </div>
-              <hr className="my-2" />
-              <div className="flex justify-between font-bold text-gray-900">
-                <span>Total</span>
-                <span>${price}</span>
-              </div>
-            </div>
-            <p className="text-xs text-gray-500 mt-4">
-              Free cancellation up to 48 hours before your booking.
-            </p>
+          <div className="flex justify-between">
+            <span>Travel Fee</span>
+            <span>${travelFee}</span>
+          </div>
+          <hr className="my-2" />
+          <div className="flex justify-between font-bold text-gray-900">
+            <span>Total</span>
+            <span>${price}</span>
           </div>
         </div>
-      </main>
-    </StripeWrapper>
+        <p className="text-xs text-gray-500 mt-4">
+          Free cancellation up to 48 hours before your booking.
+        </p>
+      </div>
+
+      {/* LEFT SIDE */}
+      <div className="lg:col-span-2 space-y-6">
+        <h1 className="text-2xl font-bold text-gray-900">Checkout</h1>
+
+        <div className="border rounded-lg p-4 bg-gray-100 space-y-2 text-gray-700 text-sm">
+          <p><span className="text-base">📅</span> <strong>Date:</strong> {formattedDate}</p>
+          <p><span className="text-base">⏰</span> <strong>Time:</strong> {formattedTime}</p>
+          <p><span className="text-base">🕓</span> <strong>Duration:</strong> {duration} hours</p>
+          <p><span className="text-base">👥</span> <strong>Guests:</strong> {guests}</p>
+          <p><span className="text-base">🎉</span> <strong>Occasion:</strong> {occasion}</p>
+          <p><span className="text-base">📍</span> <strong>Pickup:</strong> {pickup}</p>
+          <p><span className="text-base">📍</span> <strong>Dropoff:</strong> {dropoff}</p>
+        </div>
+
+        <CheckoutForm />
+      </div>
+
+      {/* ✅ DESKTOP PRICING BOX - bottom and hidden on mobile */}
+      <div className="hidden lg:block border rounded-lg bg-gray-50 p-6 h-fit">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">Pricing Information</h2>
+        <div className="space-y-2 text-sm text-gray-800">
+          <div className="flex justify-between">
+            <span>Base Price</span>
+            <span>${Number(price) - Number(travelFee)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Travel Fee</span>
+            <span>${travelFee}</span>
+          </div>
+          <hr className="my-2" />
+          <div className="flex justify-between font-bold text-gray-900">
+            <span>Total</span>
+            <span>${price}</span>
+          </div>
+        </div>
+        <p className="text-xs text-gray-500 mt-4">
+          Free cancellation up to 48 hours before your booking.
+        </p>
+      </div>
+    </div>
+  </main>
+</StripeWrapper>
+
   );
 }

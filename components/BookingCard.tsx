@@ -6,9 +6,9 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
 
 interface BookingCardProps {
+  isMobile?: boolean;
   date: Date;
   setDate: (date: Date) => void;
   duration: number;
@@ -40,6 +40,7 @@ interface BookingCardProps {
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
+  isMobile = false,
   date,
   setDate,
   duration,
@@ -72,11 +73,12 @@ const BookingCard: React.FC<BookingCardProps> = ({
   const [showWarning, setShowWarning] = useState(false);
   const router = useRouter();
 
-  const isFormValid = 
-    (step === 1 ? date && duration && startTime : pickup && dropoff && date && startTime && duration && occasion && guests > 0);
+  const isFormValid = step === 1
+    ? date && duration && startTime
+    : pickup && dropoff && date && startTime && duration && occasion && guests > 0;
 
   return (
-    <div className="hidden lg:block absolute top-[60px] left-[5%] z-20 w-[450px] bg-white rounded-xl shadow-xl p-6">
+    <div className={`${isMobile ? 'w-full p-4 rounded-t-3xl h-[90vh] overflow-y-auto' : 'absolute top-[60px] left-[5%] w-[450px] p-6'} z-20 bg-white shadow-xl`}>
       <h2 className="text-lg font-bold text-gray-900 leading-snug">
         Book Miami's #1 Open-Air Party Bus Experience
       </h2>
@@ -178,7 +180,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
                 setShowWarning(true);
               }
             }}
-            className={`mt-3 w-full text-white font-bold py-2.5 px-4 rounded-md transition bg-pink-600`}
+            className="mt-3 w-full text-white font-bold py-2.5 px-4 rounded-md transition bg-pink-600"
           >
             ⚡ Instant Book
           </button>
@@ -264,7 +266,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
                   pickup,
                   dropoff,
                   travelFee: travelFee.toString(),
-                  price: price.toString()
+                  price: price.toString(),
                 });
 
                 router.push(`/checkout?${params.toString()}`);
@@ -287,4 +289,3 @@ const BookingCard: React.FC<BookingCardProps> = ({
 };
 
 export default BookingCard;
-
