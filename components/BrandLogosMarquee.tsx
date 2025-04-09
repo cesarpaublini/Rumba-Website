@@ -27,7 +27,7 @@ export default function LogoMarquee() {
       let startPosition = 0;
 
       function animate() {
-        startPosition += 0.5;
+        startPosition += 0.2;
         if (startPosition > marqueeWidth) {
           startPosition = 0;
         }
