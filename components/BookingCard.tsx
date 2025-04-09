@@ -78,7 +78,8 @@ const BookingCard: React.FC<BookingCardProps> = ({
     : pickup && dropoff && date && startTime && duration && occasion && guests > 0;
 
   return (
-    <div className={`${isMobile ? 'w-full p-4 rounded-t-3xl h-[90vh] overflow-y-auto' : 'absolute top-[60px] left-[5%] w-[450px] p-6'} z-20 bg-white shadow-xl`}>
+    <div className={`${isMobile ? 'w-full p-4 rounded-t-3xl h-[90vh] overflow-y-auto' : 'absolute top-[60px] left-[5%] w-[450px] p-6 rounded-3xl'} z-20 bg-white shadow-xl`}>
+
       <h2 className="text-lg font-bold text-gray-900 leading-snug">
         Book Miami's #1 Open-Air Party Bus Experience
       </h2>

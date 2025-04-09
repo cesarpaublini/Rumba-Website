@@ -1,6 +1,11 @@
 import PromoBanner from "@/components/PromoBanner";
 import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
+import PartyExperienceSection from '@/components/PartyExperienceSection';
+import FAQsection from '@/components/FAQsection';
+import RiderReviewsSection from '@/components/RiderReviewsSection';
+import BrandLogosMarquee from '@/components/BrandLogosMarquee';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
@@ -8,6 +13,11 @@ export default function Home() {
       <PromoBanner />
       <Hero />
       <HowItWorks />
+      <PartyExperienceSection />
+      <FAQsection />
+      <RiderReviewsSection />
+      <BrandLogosMarquee />
+      <Footer />
     </main>
   );
 }
