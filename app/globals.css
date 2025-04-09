@@ -56,3 +56,16 @@ body {
 .jump-text {
   animation: jump-cycle 7s ease-in-out infinite;
 }
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slide-up 0.3s ease-out forwards;
+}

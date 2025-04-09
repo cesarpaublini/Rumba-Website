@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 import { Calendar } from 'react-date-range';
-import 'react-date-range/dist/styles.css';
-import 'react-date-range/dist/theme/default.css';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
@@ -59,8 +57,6 @@ const BookingCard: React.FC<BookingCardProps> = ({
   setPickup,
   dropoff,
   setDropoff,
-  pickupRef,
-  dropoffRef,
   travelFee,
   setTravelFee,
   showCalendar,
@@ -69,19 +65,27 @@ const BookingCard: React.FC<BookingCardProps> = ({
   setShowDurationOptions,
   showTimeOptions,
   setShowTimeOptions,
+  pickupRef,
+  dropoffRef,
 }) => {
   const [showWarning, setShowWarning] = useState(false);
   const router = useRouter();
 
-  const isFormValid = step === 1
-    ? date && duration && startTime
-    : pickup && dropoff && date && startTime && duration && occasion && guests > 0;
+  const isFormValid =
+    step === 1
+      ? date && duration && startTime
+      : pickup && dropoff && occasion && guests > 0;
 
   return (
-    <div className={`${isMobile ? 'w-full p-4 rounded-t-3xl h-[90vh] overflow-y-auto' : 'absolute top-[60px] left-[5%] w-[450px] p-6 rounded-3xl'} z-20 bg-white shadow-xl`}>
-
+    <div
+      className={`bg-white shadow-xl ${
+        isMobile
+          ? 'w-full p-4 rounded-t-3xl h-[90vh] overflow-y-auto'
+          : 'rounded-3xl w-[450px] p-6'
+      }`}
+    >
       <h2 className="text-lg font-bold text-gray-900 leading-snug">
-        Book Miami's #1 Open-Air Party Bus Experience
+        Book Miami&apos;s #1 Open-Air Party Bus Experience
       </h2>
       <p className="text-sm text-gray-600 mb-4">
         Perfect for bachelorettes, birthdays, tourists, locals & corporate groups.
@@ -90,6 +94,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
       {step === 1 && (
         <>
           <div className="border-t pt-4 space-y-4 text-sm text-gray-700">
+            {/* Date */}
             <div>
               <span className="block font-medium mb-1">📅 Date</span>
               <button
@@ -99,7 +104,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
                 {format(date, 'MMM d, yyyy')}
               </button>
               {showCalendar && (
-                <div className="mt-2 absolute z-50">
+                <div className="mt-2 absolute z-50 bg-white rounded shadow">
                   <Calendar
                     date={date}
                     onChange={(newDate) => {
@@ -111,6 +116,7 @@ const BookingCard: React.FC<BookingCardProps> = ({
               )}
             </div>
 
+            {/* Duration */}
             <div>
               <span className="block font-medium mb-1">⏱️ Duration</span>
               <button
@@ -121,22 +127,27 @@ const BookingCard: React.FC<BookingCardProps> = ({
               </button>
               {showDurationOptions && (
                 <div className="mt-2 absolute bg-white rounded-md shadow-lg p-3 z-50 grid grid-cols-3 gap-2">
-                  {[2, 3, 4, 5, 6, 7, 8, 9].map((d) => (
+                  {[2, 3, 4, 5, 6, 7, 8].map((d) => (
                     <button
                       key={d}
                       onClick={() => {
                         setDuration(d);
                         setShowDurationOptions(false);
                       }}
-                      className={`border rounded px-3 py-1 text-sm ${duration === d ? 'bg-pink-100 font-semibold' : 'hover:bg-gray-100'}`}
+                      className={`border rounded px-3 py-1 text-sm ${
+                        duration === d
+                          ? 'bg-pink-100 font-semibold'
+                          : 'hover:bg-gray-100'
+                      }`}
                     >
-                      {d} hours
+                      {d} hr
                     </button>
                   ))}
                 </div>
               )}
             </div>
 
+            {/* Start Time */}
             <div>
               <span className="block font-medium mb-1">🕒 Start Time</span>
               <button
@@ -151,7 +162,9 @@ const BookingCard: React.FC<BookingCardProps> = ({
                     const hour = 8 + Math.floor(i / 2);
                     const minute = i % 2 === 0 ? '00' : '30';
                     const timeStr = `${hour}:${minute}`;
-                    const ampm = `${hour > 12 ? hour - 12 : hour}:${minute} ${hour >= 12 ? 'PM' : 'AM'}`;
+                    const ampm = `${hour > 12 ? hour - 12 : hour}:${minute} ${
+                      hour >= 12 ? 'PM' : 'AM'
+                    }`;
                     return (
                       <button
                         key={i}
@@ -159,7 +172,11 @@ const BookingCard: React.FC<BookingCardProps> = ({
                           setStartTime(timeStr);
                           setShowTimeOptions(false);
                         }}
-                        className={`border rounded px-2 py-1 text-xs ${startTime === timeStr ? 'bg-pink-100 font-semibold' : 'hover:bg-gray-100'}`}
+                        className={`border rounded px-2 py-1 text-xs ${
+                          startTime === timeStr
+                            ? 'bg-pink-100 font-semibold'
+                            : 'hover:bg-gray-100'
+                        }`}
                       >
                         {ampm}
                       </button>
@@ -169,9 +186,15 @@ const BookingCard: React.FC<BookingCardProps> = ({
               )}
             </div>
           </div>
+
+          {/* Price */}
           <div className="mt-4 text-xl font-bold text-gray-900">
-            ${price.toLocaleString()} <span className="text-sm font-medium text-gray-500">/ {duration} hr{duration > 1 ? 's' : ''} (excl. fees)</span>
+            ${price.toLocaleString()}{' '}
+            <span className="text-sm font-medium text-gray-500">
+              / {duration} hr{duration > 1 ? 's' : ''} (excl. fees)
+            </span>
           </div>
+
           <button
             onClick={() => {
               if (isFormValid) {
@@ -181,45 +204,58 @@ const BookingCard: React.FC<BookingCardProps> = ({
                 setShowWarning(true);
               }
             }}
-            className="mt-3 w-full text-white font-bold py-2.5 px-4 rounded-md transition bg-pink-600"
+            className="mt-3 w-full text-white font-bold py-2.5 px-4 rounded-md transition bg-pink-600 hover:bg-pink-700"
           >
             ⚡ Instant Book
           </button>
-          {showWarning && !isFormValid && (
-            <p className="text-sm text-red-600 mt-2 opacity-75">Please fill in all required fields to continue.</p>
+
+          {showWarning && (
+            <p className="text-sm text-red-600 mt-2">
+              Please fill in all required fields to continue.
+            </p>
           )}
-          <p className="text-xs text-center text-gray-500 mt-3">You won't be charged yet</p>
+
+          <p className="text-xs text-center text-gray-500 mt-3">
+            You won&apos;t be charged yet
+          </p>
         </>
       )}
 
+      {/* Step 2 */}
       {step === 2 && (
         <div className="mt-4 space-y-4 text-sm text-gray-700">
-          <div className="flex justify-between items-center">
-            <button
-              onClick={() => setStep(1)}
-              className="text-sm text-gray-600 hover:text-gray-800 underline"
-            >
-              ← Go Back
-            </button>
-          </div>
-          <div className="mt-4 text-xl font-bold text-gray-900">
-            ${price.toLocaleString()} <span className="text-sm font-medium text-gray-500">/ {duration} hr{duration > 1 ? 's' : ''} (excl. fees)</span>
-          </div>
+          <button
+            onClick={() => setStep(1)}
+            className="text-sm text-gray-600 hover:text-gray-800 underline"
+          >
+            ← Go Back
+          </button>
+
           <div>
             <label className="block font-medium mb-1">👥 Guests</label>
             <div className="flex items-center gap-2">
-              <button onClick={() => setGuests(Math.max(1, guests - 1))} className="px-3 py-1 border rounded">-</button>
+              <button
+                onClick={() => setGuests(Math.max(1, guests - 1))}
+                className="px-3 py-1 border rounded"
+              >
+                -
+              </button>
               <span>{guests}</span>
-              <button onClick={() => setGuests(Math.min(30, guests + 1))} className="px-3 py-1 border rounded">+</button>
+              <button
+                onClick={() => setGuests(Math.min(30, guests + 1))}
+                className="px-3 py-1 border rounded"
+              >
+                +
+              </button>
             </div>
           </div>
 
           <div>
             <label className="block font-medium mb-1">🎉 Occasion</label>
             <select
-              className="w-full border rounded-md py-2 px-3"
               value={occasion}
               onChange={(e) => setOccasion(e.target.value)}
+              className="w-full border rounded-md py-2 px-3"
             >
               <option value="">Select</option>
               <option value="Bachelorette">Bachelorette</option>
@@ -234,11 +270,10 @@ const BookingCard: React.FC<BookingCardProps> = ({
           <div>
             <label className="block font-medium mb-1">📍 Pickup Address</label>
             <input
-              type="text"
-              className="w-full border rounded-md py-2 px-3"
+              ref={pickupRef}
               value={pickup}
               onChange={(e) => setPickup(e.target.value)}
-              ref={pickupRef}
+              className="w-full border rounded-md py-2 px-3"
               placeholder="Enter pickup location"
             />
           </div>
@@ -246,11 +281,10 @@ const BookingCard: React.FC<BookingCardProps> = ({
           <div>
             <label className="block font-medium mb-1">📍 Dropoff Address</label>
             <input
-              type="text"
-              className="w-full border rounded-md py-2 px-3"
+              ref={dropoffRef}
               value={dropoff}
               onChange={(e) => setDropoff(e.target.value)}
-              ref={dropoffRef}
+              className="w-full border rounded-md py-2 px-3"
               placeholder="Enter drop-off location"
             />
           </div>
@@ -269,7 +303,6 @@ const BookingCard: React.FC<BookingCardProps> = ({
                   travelFee: travelFee.toString(),
                   price: price.toString(),
                 });
-
                 router.push(`/checkout?${params.toString()}`);
               } else {
                 setShowWarning(true);
@@ -280,8 +313,10 @@ const BookingCard: React.FC<BookingCardProps> = ({
             Continue to Checkout
           </button>
 
-          {showWarning && !isFormValid && (
-            <p className="text-sm text-red-600 mt-2 opacity-75">Please fill in all required fields to continue.</p>
+          {showWarning && (
+            <p className="text-sm text-red-600 mt-2">
+              Please fill in all required fields to continue.
+            </p>
           )}
         </div>
       )}
