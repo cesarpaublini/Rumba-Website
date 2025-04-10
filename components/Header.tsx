@@ -10,6 +10,7 @@ export default function Header() {
         <nav className="hidden md:flex gap-6 text-sm text-gray-700">
           <Link href="/">Home</Link>
           <Link href="/occasions">Occasions</Link>
+          <Link href="/tours">Tours</Link>
           <Link href="/vehicles">Buses</Link>
           <Link href="/faq">FAQ</Link>
           <Link

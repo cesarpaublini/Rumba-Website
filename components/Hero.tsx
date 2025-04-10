@@ -1,56 +1,37 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
-import BookingCard from './BookingCard';
-import 'react-date-range/dist/styles.css';
-import 'react-date-range/dist/theme/default.css';
+import { useEffect, useState } from 'react';
+import Script from 'next/script';
 
 export default function Hero() {
-  const [date, setDate] = useState(new Date());
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [duration, setDuration] = useState(2);
-  const [showDurationOptions, setShowDurationOptions] = useState(false);
-  const [startTime, setStartTime] = useState('');
-  const [showTimeOptions, setShowTimeOptions] = useState(false);
-  const [price, setPrice] = useState(750);
-  const [showMobileCard, setShowMobileCard] = useState(false);
-  const [step, setStep] = useState(1);
-  const [guests, setGuests] = useState(15);
-  const [occasion, setOccasion] = useState('');
-  const [pickup, setPickup] = useState('');
-  const [dropoff, setDropoff] = useState('');
-  const [travelFee, setTravelFee] = useState(0);
-  const pickupRef = useRef<HTMLInputElement>(null);
-  const dropoffRef = useRef<HTMLInputElement>(null);
   const [isPromoActive, setIsPromoActive] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("rumba_promo");
+    const stored = localStorage.getItem('rumba_promo');
     const expiresAt = stored ? parseInt(stored, 10) : 0;
     const stillValid = expiresAt > Date.now();
     setIsPromoActive(stillValid);
   }, []);
-  
-  useEffect(() => {
-    const [hourStr, minuteStr] = startTime.split(':');
-    const hour = parseInt(hourStr || '0', 10);
-    const isAfter7PM = hour >= 19;
-
-    let basePrice = isAfter7PM ? 950 : 750;
-    let finalPrice = basePrice;
-
-    if (duration === 3) finalPrice += 300;
-    else if (duration === 4) finalPrice += 600;
-    else if (duration >= 5) finalPrice = 300 * duration;
-
-    finalPrice += travelFee;
-
-    setPrice(finalPrice);
-  }, [duration, startTime, travelFee]);
 
   return (
     <>
+      {/* Load Tourcheckout Booking Widget */}
+      <Script id="tourcheckout-loader" strategy="afterInteractive">
+        {`
+          (function(config) {
+            window._tcConfig = config || {};
+            var scriptId = 'tc-book-button-js';
+            if (document.getElementById(scriptId)) return;
+            var head = document.getElementsByTagName('head')[0];
+            var elem = document.createElement('script'); elem.id = scriptId;
+            var basePath = 'https://book.tourcheckout.com';
+            elem.src = basePath + '/' + 'tcloader.js';
+            head.appendChild(elem);
+          })({key: '2cdc-68f6-621b'});
+        `}
+      </Script>
+
       <section className="relative min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] w-full overflow-hidden">
         {/* Background Video */}
         <div className="absolute inset-0 z-0">
@@ -76,8 +57,8 @@ export default function Hero() {
           </video>
         </div>
 
-        {/* Overlay Text for Mobile */}
-        <div className="absolute inset-0 bg-black/50 lg:hidden z-10 flex items-center justify-center text-center px-4">
+        {/* Overlay Text (Mobile + Desktop) */}
+        <div className="absolute inset-0 bg-black/50 z-10 flex items-center justify-center text-center px-4">
           <div className="relative z-10 max-w-xl">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-md leading-tight">
               Book Miami's #1 Open-Air Party Bus Experience
@@ -85,105 +66,15 @@ export default function Hero() {
             <p className="mt-3 text-white text-base sm:text-lg md:text-xl">
               Perfect for bachelorettes, birthdays, tourists, locals & corporate groups.
             </p>
-            <Link
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowMobileCard(true);
-              }}
+            <a
+              href="https://book.tourcheckout.com/s/2cdc-68f6-621b/041a25"
               className="mt-6 inline-block bg-pink-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-pink-700 transition"
             >
-              Book Now
-            </Link>
+              ⚡ Book Now
+            </a>
           </div>
         </div>
-
-        {/* Booking Card - Desktop */}
-        <div className="hidden lg:block absolute top-[60px] left-[5%] z-20">
-          <BookingCard
-            isPromoActive={isPromoActive}
-            isMobile={false}
-            date={date}
-            setDate={setDate}
-            duration={duration}
-            setDuration={setDuration}
-            startTime={startTime}
-            setStartTime={setStartTime}
-            price={price}
-            setPrice={setPrice}
-            step={step}
-            setStep={setStep}
-            guests={guests}
-            setGuests={setGuests}
-            occasion={occasion}
-            setOccasion={setOccasion}
-            pickup={pickup}
-            setPickup={setPickup}
-            dropoff={dropoff}
-            setDropoff={setDropoff}
-            travelFee={travelFee}
-            setTravelFee={setTravelFee}
-            showCalendar={showCalendar}
-            setShowCalendar={setShowCalendar}
-            showDurationOptions={showDurationOptions}
-            setShowDurationOptions={setShowDurationOptions}
-            showTimeOptions={showTimeOptions}
-            setShowTimeOptions={setShowTimeOptions}
-            pickupRef={pickupRef}
-            dropoffRef={dropoffRef}
-          />
-        </div>
       </section>
-
-      {/* Booking Card - Mobile Drawer */}
-      <div
-        className={`fixed bottom-0 left-0 right-0 z-50 transition-transform duration-500 ease-in-out transform ${
-          showMobileCard ? 'translate-y-0' : 'translate-y-full'
-        } bg-white shadow-2xl rounded-t-3xl max-h-[85vh] mt-[15vh] overflow-y-auto pt-6 px-4 lg:hidden`}
-      >
-        <div className="sticky top-0 bg-white z-10 px-4 pt-4">
-          <button
-            onClick={() => setShowMobileCard(false)}
-            className="text-sm text-gray-600 underline"
-          >
-            Close
-          </button>
-        </div>
-        <div className="px-4 pb-6">
-          <BookingCard
-            isMobile={true}
-            isPromoActive={isPromoActive}
-            date={date}
-            setDate={setDate}
-            duration={duration}
-            setDuration={setDuration}
-            startTime={startTime}
-            setStartTime={setStartTime}
-            price={price}
-            setPrice={setPrice}
-            step={step}
-            setStep={setStep}
-            guests={guests}
-            setGuests={setGuests}
-            occasion={occasion}
-            setOccasion={setOccasion}
-            pickup={pickup}
-            setPickup={setPickup}
-            dropoff={dropoff}
-            setDropoff={setDropoff}
-            travelFee={travelFee}
-            setTravelFee={setTravelFee}
-            showCalendar={showCalendar}
-            setShowCalendar={setShowCalendar}
-            showDurationOptions={showDurationOptions}
-            setShowDurationOptions={setShowDurationOptions}
-            showTimeOptions={showTimeOptions}
-            setShowTimeOptions={setShowTimeOptions}
-            pickupRef={pickupRef}
-            dropoffRef={dropoffRef}
-          />
-        </div>
-      </div>
     </>
   );
 }

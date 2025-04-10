@@ -35,6 +35,7 @@ interface BookingCardProps {
   setShowTimeOptions: (show: boolean) => void;
   pickupRef: React.RefObject<HTMLInputElement>;
   dropoffRef: React.RefObject<HTMLInputElement>;
+  isPromoActive: boolean;
 }
 
 const BookingCard: React.FC<BookingCardProps> = ({
@@ -67,7 +68,8 @@ const BookingCard: React.FC<BookingCardProps> = ({
   setShowTimeOptions,
   pickupRef,
   dropoffRef,
-}) => {
+  isPromoActive,
+  }) => {
   const [showWarning, setShowWarning] = useState(false);
   const router = useRouter();
 
@@ -194,6 +196,13 @@ const BookingCard: React.FC<BookingCardProps> = ({
               / {duration} hr{duration > 1 ? 's' : ''} (excl. fees)
             </span>
           </div>
+          <div className="mt-4 text-xl font-bold text-gray-900">
+  ${price.toLocaleString()} <span className="text-sm font-medium text-gray-500">/ {duration} hr{duration > 1 ? 's' : ''} (excl. fees)</span>
+</div>
+
+{isPromoActive && (
+  <p className="text-green-600 text-sm font-medium mt-1">🎉 $100 promo applied!</p>
+)}
 
           <button
             onClick={() => {

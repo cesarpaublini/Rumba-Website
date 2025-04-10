@@ -49,7 +49,7 @@ const PromoBanner = () => {
     <div className="w-full sticky top-[60px] z-40">
       <section className="bg-pink-600 text-white text-sm font-semibold py-2 px-4 text-center">
         <div className="flex flex-row justify-center items-center gap-2">
-          <span className="whitespace-nowrap">🎉 <strong className="text-white">$100 OFF</strong></span>
+          <span className="whitespace-nowrap">🎉 <strong className="text-white">Book now and get $100 OFF</strong></span>
           <span className="hidden sm:inline whitespace-nowrap">– Offer ends in</span>
           <span className="whitespace-nowrap">⏳ {formatTime(timeLeft)}</span>
         </div>
