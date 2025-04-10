@@ -1,148 +1,152 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { format, parseISO } from 'date-fns';
-import StripeWrapper from '@/components/StripeWrapper';
-import CheckoutForm from '@/components/CheckoutForm';
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { loadStripe } from '@stripe/stripe-js'
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 export default function CheckoutPage() {
-  const params = useSearchParams();
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const searchParams = useSearchParams()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const date = params.get('date');
-  const time = params.get('time');
-  const duration = params.get('duration');
-  const guests = params.get('guests');
-  const occasion = params.get('occasion');
-  const pickup = params.get('pickup');
-  const dropoff = params.get('dropoff');
-  const travelFee = params.get('travelFee');
-  const price = params.get('price');
+  // Get booking details from URL parameters
+  const date = searchParams.get('date')
+  const duration = searchParams.get('duration')
+  const guests = searchParams.get('guests')
+  const startTime = searchParams.get('startTime')
+  const occasion = searchParams.get('occasion')
+  const pickup = searchParams.get('pickup')
+  const dropoff = searchParams.get('dropoff')
+  const travelFee = searchParams.get('travelFee')
+  const price = searchParams.get('price')
 
-  // Format the date and time
-  const formattedDate = date ? format(parseISO(date), 'MMMM d, yyyy') : '';
-  const formattedTime = time
-    ? new Date(`2025-01-01T${time}:00`).toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
+  // Additional customer information
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+
+  const handleCheckout = async () => {
+    setLoading(true)
+    setError(null)
+    
+    try {
+      // Create payment intent
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: price,
+        }),
       })
-    : '';
 
-  // Create PaymentIntent as soon as the page loads
-  useEffect(() => {
-    fetch('/api/checkout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        amount: price,
-      }),
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          const error = await res.json();
-          throw new Error(error.message);
-        }
-        return res.json();
+      const { clientSecret, error: apiError } = await response.json()
+      
+      if (apiError) {
+        throw new Error(apiError)
+      }
+
+      // Initialize Stripe
+      const stripe = await stripePromise
+      if (!stripe) {
+        throw new Error('Stripe failed to initialize')
+      }
+
+      // Redirect to Stripe Checkout
+      const { error: stripeError } = await stripe.redirectToCheckout({
+        sessionId: clientSecret,
+        mode: 'payment',
+        successUrl: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancelUrl: `${window.location.origin}/checkout`,
       })
-      .then((data) => {
-        setClientSecret(data.clientSecret);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [price]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!clientSecret) {
-    return <div>Unable to initialize payment</div>;
+      if (stripeError) {
+        throw new Error(stripeError.message)
+      }
+    } catch (error) {
+      console.error('Checkout error:', error)
+      setError(error instanceof Error ? error.message : 'An error occurred during checkout')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
-    <StripeWrapper clientSecret={clientSecret}>
-  <main className="min-h-screen bg-[#f1f2f4] py-10 px-4">
-    <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className="max-w-2xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">Checkout</h1>
       
-      {/* ✅ MOBILE PRICING BOX - top and hidden on desktop */}
-      <div className="block lg:hidden border rounded-lg bg-gray-50 p-6 h-fit">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Pricing Information</h2>
-        <div className="space-y-2 text-sm text-gray-800">
-          <div className="flex justify-between">
-            <span>Base Price</span>
-            <span>${Number(price) - Number(travelFee)}</span>
-          </div>
-          <div className="flex justify-between">
-            <span>Travel Fee</span>
-            <span>${travelFee}</span>
-          </div>
-          <hr className="my-2" />
-          <div className="flex justify-between font-bold text-gray-900">
-            <span>Total</span>
-            <span>${price}</span>
-          </div>
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+          {error}
         </div>
-        <p className="text-xs text-gray-500 mt-4">
-          Free cancellation up to 48 hours before your booking.
-        </p>
+      )}
+      
+      {/* Booking Summary */}
+      <div className="bg-gray-50 p-6 rounded-lg mb-6">
+        <h2 className="text-xl font-semibold mb-4">Booking Summary</h2>
+        <div className="space-y-2">
+          <p><strong>Date:</strong> {date && new Date(date).toLocaleDateString()}</p>
+          <p><strong>Time:</strong> {startTime}</p>
+          <p><strong>Duration:</strong> {duration} hours</p>
+          <p><strong>Guests:</strong> {guests}</p>
+          <p><strong>Occasion:</strong> {occasion}</p>
+          <p><strong>Pickup:</strong> {pickup}</p>
+          <p><strong>Dropoff:</strong> {dropoff}</p>
+          <p><strong>Travel Fee:</strong> ${travelFee}</p>
+          <p className="text-xl font-bold mt-4">Total: ${price}</p>
+        </div>
       </div>
 
-      {/* LEFT SIDE */}
-      <div className="lg:col-span-2 space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Checkout</h1>
-
-        <div className="border rounded-lg p-4 bg-gray-100 space-y-2 text-gray-700 text-sm">
-          <p><span className="text-base">📅</span> <strong>Date:</strong> {formattedDate}</p>
-          <p><span className="text-base">⏰</span> <strong>Time:</strong> {formattedTime}</p>
-          <p><span className="text-base">🕓</span> <strong>Duration:</strong> {duration} hours</p>
-          <p><span className="text-base">👥</span> <strong>Guests:</strong> {guests}</p>
-          <p><span className="text-base">🎉</span> <strong>Occasion:</strong> {occasion}</p>
-          <p><span className="text-base">📍</span> <strong>Pickup:</strong> {pickup}</p>
-          <p><span className="text-base">📍</span> <strong>Dropoff:</strong> {dropoff}</p>
+      {/* Customer Information Form */}
+      <div className="space-y-4 bg-white p-6 rounded-lg border">
+        <h2 className="text-xl font-semibold">Customer Information</h2>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Name</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            placeholder="Enter your full name"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Phone</label>
+          <input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            placeholder="Enter your phone number"
+            required
+          />
         </div>
 
-        <CheckoutForm />
-      </div>
-
-      {/* ✅ DESKTOP PRICING BOX - bottom and hidden on mobile */}
-      <div className="hidden lg:block border rounded-lg bg-gray-50 p-6 h-fit">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Pricing Information</h2>
-        <div className="space-y-2 text-sm text-gray-800">
-          <div className="flex justify-between">
-            <span>Base Price</span>
-            <span>${Number(price) - Number(travelFee)}</span>
-          </div>
-          <div className="flex justify-between">
-            <span>Travel Fee</span>
-            <span>${travelFee}</span>
-          </div>
-          <hr className="my-2" />
-          <div className="flex justify-between font-bold text-gray-900">
-            <span>Total</span>
-            <span>${price}</span>
-          </div>
-        </div>
-        <p className="text-xs text-gray-500 mt-4">
-          Free cancellation up to 48 hours before your booking.
-        </p>
+        <button
+          onClick={handleCheckout}
+          disabled={loading || !email || !name || !phone}
+          className={`w-full mt-6 bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-6 rounded-lg transition-colors ${
+            loading || !email || !name || !phone ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+        >
+          {loading ? 'Processing...' : 'Pay Now'}
+        </button>
       </div>
     </div>
-  </main>
-</StripeWrapper>
-
-  );
+  )
 }

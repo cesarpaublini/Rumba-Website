@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
-// Temporary mock data for bus types
+// Mock data for bus types
 const mockBusTypes = [
   { id: '1', name: 'Open Air Party Bus' },
   { id: '2', name: '28 Passenger Party Bus' },
@@ -22,6 +22,7 @@ const mockBusTypes = [
 
 export function CreateBookingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [step, setStep] = useState(1)
+  const [busTypes, setBusTypes] = useState<{ id: string; name: string }[]>(mockBusTypes)
   const [formData, setFormData] = useState({
     date: undefined as Date | undefined,
     startTime: '',
