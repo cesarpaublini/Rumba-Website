@@ -13,6 +13,13 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
+// Temporary mock data for bus types
+const mockBusTypes = [
+  { id: '1', name: 'Open Air Party Bus' },
+  { id: '2', name: '28 Passenger Party Bus' },
+  { id: '3', name: '55 Passenger Party Bus' },
+]
+
 export function CreateBookingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({

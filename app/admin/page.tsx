@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { CreateBookingModal } from '@/components/admin/booking-form' // ✅ Correct named import
+import { CreateBookingModal } from '@/components/admin/booking-form'
 
 const mockBookings = [
   {
@@ -88,7 +88,6 @@ export default function AdminPage() {
         </CardContent>
       </Card>
 
-      {/* Modal */}
       <CreateBookingModal open={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   )
