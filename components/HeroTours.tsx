@@ -1,49 +1,57 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import clsx from 'clsx'
 
 const rotatingWords = [
-  'Birthdays',
   'Bachelorettes',
-  'Corporate Events',
+  'Birthdays',
+  'Corp Events',
   'Night Outs',
   'Just for Fun',
 ]
 
 export default function HeroTours() {
   const [index, setIndex] = useState(0)
+  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % rotatingWords.length)
-    }, 3000)
+      setIsVisible(false)
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % rotatingWords.length)
+        setIsVisible(true)
+      }, 300)
+    }, 5000)
+
     return () => clearInterval(interval)
-  }, [])
+  }, [index])
 
   return (
-    <section className="relative h-[90vh] w-full flex items-center justify-center text-white text-center px-4">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="/images/tours-hero.jpg"
-          alt="Party Bus Hero"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/50" />
-      </div>
+    <section
+      className="relative w-full h-[50vh] md:h-[45vh] flex items-center justify-center text-center bg-cover bg-center"
+      style={{
+        backgroundImage: "url('/images/rumba-miami-party-bus-background-pattern.png')",
+      }}
+    >
+      <div className="absolute inset-0 bg-black/20 z-0" />
 
-      {/* Text */}
-      <div className="z-10 max-w-3xl">
-        <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-4">
-          Perfect for{' '}
+      <div className="relative z-10 px-6 max-w-4xl">
+        <h1 className="text-white text-4xl md:text-6xl font-bold leading-tight mb-4">
+          Our open-air party bus tours
+          <br />
+          are perfect for{' '}
           <span
-  className="inline-block w-[240px] text-pink-400 text-center animate-slide-up whitespace-nowrap"
->
-  {rotatingWords[index]}
-</span>
+            className={clsx(
+              'inline-block text-pink-600 transition-opacity duration-500',
+              isVisible ? 'opacity-100' : 'opacity-0'
+            )}
+          >
+            {rotatingWords[index]}
+          </span>
         </h1>
-        <p className="text-lg sm:text-xl">
-          Book a private open-air party bus through Miami’s top neighborhoods.
+        <p className="text-white/80 text-lg md:text-xl mt-4">
+          Book your unforgettable Miami experience — music, drinks & good vibes on wheels.
         </p>
       </div>
     </section>

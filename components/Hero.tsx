@@ -67,11 +67,17 @@ export default function Hero() {
               Perfect for bachelorettes, birthdays, tourists, locals & corporate groups.
             </p>
             <a
-              href="https://book.tourcheckout.com/s/2cdc-68f6-621b/041a25"
-              className="mt-6 inline-block bg-pink-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-pink-700 transition"
-            >
-              ⚡ Book Now
-            </a>
+  href="https://book.tourcheckout.com/s/2cdc-68f6-621b/041a25"
+  target="_blank"
+  rel="noopener noreferrer"
+  onClick={() => {
+    const event = new Event('trigger-booking-popup')
+    window.dispatchEvent(event)
+  }}
+  className="mt-6 inline-block bg-pink-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-pink-700 transition"
+>
+  ⚡ Book Now
+</a>
           </div>
         </div>
       </section>

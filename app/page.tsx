@@ -5,7 +5,7 @@ import PartyExperienceSection from '@/components/PartyExperienceSection';
 import FAQsection from '@/components/FAQsection';
 import RiderReviewsSection from '@/components/RiderReviewsSection';
 import BrandLogosMarquee from '@/components/BrandLogosMarquee';
-
+import BookingPopup from '@/components/bookingPopup';
 
 export default function Home() {
   return (
@@ -17,7 +17,7 @@ export default function Home() {
       <FAQsection />
       <RiderReviewsSection />
       <BrandLogosMarquee />
-      
+        
     </main>
   );
 }

@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
 /* 🔁 Marquee Animation */
 @keyframes marqueeTrack {
   0% {
@@ -131,6 +136,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }

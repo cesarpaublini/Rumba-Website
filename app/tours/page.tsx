@@ -1,102 +1,178 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import Image from 'next/image'
 import Link from 'next/link'
 import HeroTours from '@/components/HeroTours'
-import AnimatedHeadline from '@/components/AnimatedHeadline'
 import AboutSection from '@/components/AboutSectionTours'
 
 export default function ToursPage() {
-  const words = ['Birthdays', 'Bachelorettes', 'Corporate Events', 'Night Outs', 'Just for Fun']
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
-
   return (
     <>
-      {/* Hero Image Section */}
-      <div
-        className="relative w-full h-[40vh] md:h-[50vh] flex items-center justify-center bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/images/tour-hero.jpg)' }}
-      >
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative z-10 px-4 text-center">
-          <AnimatedHeadline />
-        </div>
-      </div>
-
-      {/* About Section (New) */}
+      <HeroTours />
       <AboutSection />
 
-      <div className="px-6 py-10 max-w-5xl mx-auto text-gray-800">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">RumbaTours Miami</h1>
-          <p className="text-lg max-w-2xl mx-auto">
-            Experience Miami's vibrant nightlife like never before with RumbaTours Miami's private open-air party bus tours. Perfect for{' '}
-            <span className="text-pink-600 font-semibold">{words[currentIndex]}</span>{' '}
-            and more! Bachelorette parties, birthdays, corporate events, or simply a night out with friends – our tours offer an unforgettable journey through the city's most iconic neighborhoods.
-          </p>
-        </div>
+      <section 
+      id="spacious"
+      className="max-w-7xl mx-auto px-6 py-5 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center scroll-mt-24">
+  {/* Video Section */}
+  <div className="order-1 w-full">
+    <div className="rounded-xl overflow-hidden shadow-lg border-4 border-pink-500">
+      <video
+        src="/videos/spacious-social.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full h-auto object-cover"
+      />
+    </div>
+  </div>
 
-        {/* Highlights Section */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <div>
-            <h2 className="text-2xl font-semibold mb-2">Tour Highlights</h2>
-            <ul className="list-disc ml-5 space-y-2">
-              <li><strong>2-Hour Private Tour:</strong> Explore Downtown Miami, Brickell, Wynwood, Little Havana, Coral Gables, Coconut Grove, and South Beach.</li>
-              <li><strong>Spacious Seating:</strong> Open-air party buses fit up to 30 passengers — plenty of room for dancing and socializing.</li>
-              <li><strong>Premium Sound System:</strong> High-fidelity music onboard sets the perfect vibe.</li>
-              <li><strong>BYOB:</strong> Bring your own beverages (no glass). Coolers and ice provided.</li>
-              <li><strong>Onboard Attendant/DJ:</strong> Serves drinks, manages music, captures memories.</li>
-            </ul>
-          </div>
-          <div className="bg-gray-100 rounded-md p-4 shadow-sm">
-            <Image src="/images/bus-tour.jpg" width={600} height={400} alt="Party Bus Tour" className="rounded-md w-full object-cover" />
-          </div>
-        </div>
+  {/* Text Section */}
+  <div className="order-2 text-center md:text-left">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      🚐 Spacious & Social
+    </h2>
+    <p className="text-gray-600 text-lg">
+      With capacity for up to 30 passengers, our party buses are perfect for big groups.
+      Invite your entire crew — there's plenty of room to dance, socialize, and celebrate together in style.
+    </p>
+  </div>
+</section>
 
-        {/* Occasion Section */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-semibold mb-2">Perfect for Any Occasion</h2>
-          <p>
-            Whether you're planning a bachelorette party, birthday celebration, corporate event, or just a fun night out, RumbaTours Miami offers a unique and exciting way to experience the city's nightlife. Our customizable tours cater to your specific needs, making each event special and tailored to your preferences.
-          </p>
-        </div>
+      <section className="max-w-7xl mx-auto px-6 py-5 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center scroll-mt-24">
+  {/* Video Section (1st on mobile, 2nd on desktop) */}
+  <div className="order-1 md:order-2 w-full">
+    <div className="rounded-xl overflow-hidden shadow-lg border-4 border-pink-500">
+      <video
+        src="/videos/byob-cooler.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full h-auto object-cover"
+      />
+    </div>
+  </div>
 
-        {/* Booking Options */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-semibold mb-2">Booking Information</h2>
-          <ul className="list-disc ml-5 space-y-2">
-            <li><strong>Private Tours:</strong> Book the entire bus for a personalized group experience.</li>
-            <li><strong>Single Ticket Tours:</strong> Join others for a fun, shared party bus ride.</li>
-            <li><strong>Custom Rentals:</strong> Great for parades, marketing activations, and special events.</li>
-          </ul>
-        </div>
+  {/* Text Section (2nd on mobile, 1st on desktop) */}
+  <div className="order-2 md:order-1 text-center md:text-left">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      🧊 Cooler with Ice for BYOB
+    </h2>
+    <p className="text-gray-600 text-lg">
+      Bring your own drinks and we'll take care of the rest. Every tour comes with a cooler stocked with ice to keep your beverages cold the whole ride. Please, no glass containers.
+    </p>
+  </div>
+</section>
 
-        {/* Why Choose Us */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-semibold mb-2">Why Choose RumbaTours Miami?</h2>
-          <p>
-            With years of experience in the Miami tourism and transport industry, RumbaTours is dedicated to providing top-notch service and unforgettable experiences. Our fleet of open-air party buses, combined with our professional and friendly staff, ensures that your event will be one to remember.
-          </p>
-        </div>
+<section className="max-w-7xl mx-auto px-6 py-5 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center scroll-mt-24">
+  {/* Video Section */}
+  <div className="order-1 w-full">
+    <div className="rounded-xl overflow-hidden shadow-lg border-4 border-pink-500">
+      <video
+        src="/videos/open-air-views.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full h-auto object-cover"
+      />
+    </div>
+  </div>
 
-        {/* CTA */}
-        <div className="text-center">
-          <h3 className="text-2xl font-bold mb-4">Ready to Book Your Tour?</h3>
-          <Button asChild size="lg">
-            <Link href="/">Book Now</Link>
-          </Button>
-        </div>
-      </div>
+  {/* Text Section */}
+  <div className="order-2 text-center md:text-left">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      🌆 Open-Air Views of Miami
+    </h2>
+    <p className="text-gray-600 text-lg">
+      Experience the city like never before with our unique open-air design. Enjoy 360° unobstructed views as you cruise through Miami's most iconic neighborhoods — from Brickell to Wynwood and beyond.
+    </p>
+  </div>
+</section>
+<section className="max-w-7xl mx-auto px-6 py-5 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center scroll-mt-24">
+  {/* Video Section (1st on mobile, 2nd on desktop) */}
+  <div className="order-1 md:order-2 w-full">
+    <div className="rounded-xl overflow-hidden shadow-lg border-4 border-pink-500">
+      <video
+        src="/videos/bluetooth-sound.mp4" // Replace with your actual video path
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full h-auto object-cover"
+      />
+    </div>
+  </div>
+
+  {/* Text Section (2nd on mobile, 1st on desktop) */}
+  <div className="order-2 md:order-1 text-center md:text-left">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      🔊 Premium Sound System with Bluetooth
+    </h2>
+    <p className="text-gray-600 text-lg">
+      Your soundtrack sets the vibe — and we've got the setup to match. Connect your playlist to our high-fidelity Bluetooth sound system and keep the party going the whole ride.
+    </p>
+  </div>
+</section>
+
+<section className="max-w-7xl mx-auto px-6 py-5 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center scroll-mt-24">
+  {/* Video Section */}
+  <div className="order-1 w-full">
+    <div className="rounded-xl overflow-hidden shadow-lg border-4 border-pink-500">
+      <video
+        src="/videos/friendly-attendant.mp4" 
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full h-auto object-cover"
+      />
+    </div>
+  </div>
+
+  {/* Text Section */}
+  <div className="order-2 text-center md:text-left">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      🙌 Friendly Attendant & Professional Driver
+    </h2>
+    <p className="text-gray-600 text-lg">
+      From pouring drinks to helping with the music and capturing your best moments, your onboard attendant is there to assist. Plus, your professional driver ensures a safe and smooth ride from start to finish.
+    </p>
+  </div>
+</section>
+<section className="max-w-7xl mx-auto px-6 py-10 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center scroll-mt-24">
+  {/* Video Section (1st on mobile, 2nd on desktop) */}
+  <div className="order-1 md:order-2 w-full">
+    <div className="rounded-xl overflow-hidden shadow-lg border-4 border-pink-500">
+      <video
+        src="/videos/flexible-pickup.mp4" // Replace with your actual video path
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full h-auto object-cover"
+      />
+    </div>
+  </div>
+
+  {/* Text Section (2nd on mobile, 1st on desktop) */}
+  <div className="order-2 md:order-1 text-center md:text-left">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      📍 Flexible Pickup Options
+    </h2>
+    <p className="text-gray-600 text-lg">
+      We offer pickup and drop-off anywhere in:
+    </p>
+    <p className="text-gray-600 text-lg font-semibold mt-2">
+      Downtown Miami, Brickell, Wynwood, Little Havana, Coral Gables
+    </p>
+    <p className="text-gray-600 text-lg mt-2">
+      Whether it's a bar, club, restaurant, hotel, Airbnb, or your house — if it's within these areas, we'll come to you.
+    </p>
+  </div>
+</section>
     </>
   )
 }
