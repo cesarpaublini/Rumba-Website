@@ -88,22 +88,27 @@ export default function PartyExperienceSection() {
         </div>
 
         {/* Right Box */}
-        <div className="bg-[#ff4da2] text-white rounded-3xl shadow-lg p-8 flex flex-col justify-between">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-4">
-              Your Ultimate Open Air Party Bus Experience <span className="inline-block">🎉</span>
-            </h2>
-            <p className="text-base md:text-lg leading-relaxed">
-              Experience a fun party tour around Miami! Perfect for bachelorettes, birthdays, or a night out. Enjoy 360-degree views on our open-air bus, bring your own drinks, and vibe to music on our premium sound system.
-            </p>
-          </div>
-          <Link
-            href="#booking"
-            className="mt-6 inline-block bg-black  text-[white] font-semibold px-6 py-3 rounded-md shadow hover:opacity-80 transition w-fit"
-          >
-            Book Now
-          </Link>
-        </div>
+<div
+  className="text-white rounded-3xl shadow-lg p-8 flex flex-col justify-between bg-cover bg-center"
+  style={{
+    backgroundImage: "url('/images/rumba-miami-party-bus-background-pattern.png')"
+  }}
+>
+  <div>
+    <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-4">
+      Your Ultimate Open Air Party Bus Experience <span className="inline-block">🎉</span>
+    </h2>
+    <p className="text-base md:text-lg leading-relaxed">
+      Experience a fun party tour around Miami! Perfect for bachelorettes, birthdays, or a night out. Enjoy 360-degree views on our open-air bus, bring your own drinks, and vibe to music on our premium sound system.
+    </p>
+  </div>
+  <Link
+    href="#booking"
+    className="mt-6 inline-block bg-black text-white font-semibold px-6 py-3 rounded-md shadow hover:opacity-80 transition w-fit"
+  >
+    Book Now
+  </Link>
+</div>
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ export default function Header() {
           <Link href="/">Home</Link>
           <Link href="/occasions">Occasions</Link>
           <Link href="/tours">Tours</Link>
+          <Link href="/advertise" className="hover:text-pink-500">Advertise</Link>
           <Link href="/vehicles">Buses</Link>
           <Link href="/faq">FAQ</Link>
           <Link

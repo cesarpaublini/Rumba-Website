@@ -1,89 +1,61 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import clsx from 'clsx'
 
-const cities = [
-  { name: 'Miami, FL', weight: 20 },
-  { name: 'Brickell, FL', weight: 15 },
-  { name: 'Wynwood, FL', weight: 15 },
-  { name: 'Coral Gables, FL', weight: 10 },
-  { name: 'Little Havana, FL', weight: 10 },
-  { name: 'South Beach, FL', weight: 10 },
-  { name: 'New York, NY', weight: 2 },
-  { name: 'Boston, MA', weight: 1 },
-  { name: 'Philadelphia, PA', weight: 1 },
-  { name: 'Washington, DC', weight: 1 },
-  { name: 'Austin, TX', weight: 1 },
-  { name: 'Houston, TX', weight: 1 },
-  { name: 'Dallas, TX', weight: 1 },
-  { name: 'Nashville, TN', weight: 1 },
-  { name: 'Chicago, IL', weight: 1 },
-  { name: 'Los Angeles, CA', weight: 1 },
-  { name: 'Atlanta, GA', weight: 1 },
+const messages = [
+  'Jessica from Orlando just booked a party bus!',
+  'Carlos from Brickell just booked a party bus!',
+  'Emily from Fort Lauderdale just booked a party bus!',
+  'Daniela from Tampa just booked a party bus!',
+  'Chris from Wynwood just booked a party bus!',
+  'Amanda from Houston just booked a party bus!',
+  'Ashley from New York just booked a party bus!',
+  'Kevin from Coral Gables just booked a party bus!',
+  'Samantha from Little Havana just booked a party bus!',
+  'Latoyna from Atlanta just booked a party bus!',
 ]
 
-function getRandomCity() {
-  const totalWeight = cities.reduce((sum, city) => sum + city.weight, 0)
-  let random = Math.random() * totalWeight
-  for (const city of cities) {
-    if (random < city.weight) return city.name
-    random -= city.weight
-  }
-  return cities[0].name
-}
-
-export default function BookingBanner() {
-  const [visible, setVisible] = useState(false)
-  const [city, setCity] = useState('')
-  const [shownCount, setShownCount] = useState(0)
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
+export default function BookingPopup() {
+  const [show, setShow] = useState(false)
+  const [message, setMessage] = useState('')
+  const [closed, setClosed] = useState(false)
 
   useEffect(() => {
-    if (sessionStorage.getItem('banner-shown') === 'true') return
+    if (closed) return
 
     const timers: NodeJS.Timeout[] = []
 
-    const showBanner = (delay: number) => {
-      timers.push(setTimeout(() => {
-        setCity(getRandomCity())
-        setVisible(true)
-
-        const hideTimeout = setTimeout(() => {
-          setVisible(false)
-        }, 20000) // Show for 20s
-        setTimeoutId(hideTimeout)
-
-        setShownCount((prev) => {
-          const newCount = prev + 1
-          if (newCount >= 2) {
-            sessionStorage.setItem('banner-shown', 'true')
-          }
-          return newCount
-        })
-      }, delay))
+    const showPopup = (delay: number) => {
+      timers.push(
+        setTimeout(() => {
+          setMessage(messages[Math.floor(Math.random() * messages.length)])
+          setShow(true)
+          // Auto close after 20s
+          timers.push(setTimeout(() => setShow(false), 20000))
+        }, delay)
+      )
     }
 
-    showBanner(15000)    // First banner at 15s
-    showBanner(180000)   // Second banner at 3 minutes
+    showPopup(15000) // First popup after 15s
+    showPopup(90000) // Second popup after 90s
 
     return () => timers.forEach(clearTimeout)
-  }, [])
+  }, [closed])
 
-  const handleClose = () => {
-    if (timeoutId) clearTimeout(timeoutId)
-    setVisible(false)
-  }
+  if (!show || closed) return null
 
   return (
     <div
-      className={`fixed z-50 px-4 py-3 text-sm bg-white border border-pink-500 rounded-lg shadow-md transition-all duration-500 ${
-        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-      } left-1/2 -translate-x-1/2 md:left-4 md:translate-x-0 bottom-4 w-[300px] text-gray-800`}
+      className={clsx(
+        'fixed bottom-4 z-50 max-w-sm w-[90%] sm:w-[360px] px-4 py-3 bg-white border border-pink-500 shadow-xl text-sm rounded-lg transition-all duration-500',
+        'left-1/2 -translate-x-1/2 sm:left-4 sm:translate-x-0'
+      )}
     >
-      <div className="flex items-start justify-between gap-4">
-        <span>🚐 Someone from <strong>{city}</strong> just booked a party bus!</span>
-        <button onClick={handleClose} className="text-gray-500 hover:text-gray-900 text-lg leading-none">
-          ×
+      <div className="flex justify-between items-start gap-3">
+        <p className="text-gray-800 font-medium">🎉 {message}</p>
+        <button onClick={() => { setShow(false); setClosed(true) }} className="text-gray-400 hover:text-gray-600">
+          ✕
         </button>
       </div>
     </div>
