@@ -12,7 +12,7 @@ const occasions = [
     image: '/images/occasion-bachelorette.jpg',
     testimonial: '“Best night ever! The bride-to-be was obsessed!” – Maria R.',
     cta: 'Book Your Bachelorette Party Now',
-    href: '/#bachelorettes'
+    href: '/#bachelorettes',
   },
   {
     id: 'birthdays',
@@ -22,7 +22,7 @@ const occasions = [
     image: '/images/occasion-birthday.jpg',
     testimonial: '“We had the time of our lives — unforgettable birthday vibes!” – Luis A.',
     cta: 'Check Birthday Packages',
-    href: '/#birthdays'
+    href: '/#birthdays',
   },
   {
     id: 'corporate',
@@ -32,7 +32,7 @@ const occasions = [
     image: '/images/occasion-corporate.jpg',
     testimonial: '“Our team loved it! Definitely doing it again next quarter.” – Pepsi Miami Team',
     cta: 'Book a Corporate Ride',
-    href: '/#corporate'
+    href: '/#corporate',
   },
   {
     id: 'weddings',
@@ -42,7 +42,7 @@ const occasions = [
     image: '/images/occasion-wedding.jpg',
     testimonial: '“So easy and beautiful. They handled everything flawlessly.” – Vanessa & Erik',
     cta: 'Reserve for Your Wedding',
-    href: '/#weddings'
+    href: '/#weddings',
   },
   {
     id: 'proms',
@@ -52,7 +52,7 @@ const occasions = [
     image: '/images/occasion-prom.jpg',
     testimonial: '“Safe, super fun, and the kids LOVED it.” – Carlos G., Parent',
     cta: 'Prom Bus Availability',
-    href: '/#proms'
+    href: '/#proms',
   },
   {
     id: 'nightouts',
@@ -62,69 +62,68 @@ const occasions = [
     image: '/images/occasion-nightout.jpg',
     testimonial: '“Best way to bar hop without worrying about parking or Ubers.” – Nicole & Crew',
     cta: 'Plan Your Night Out',
-    href: '/#nightouts'
+    href: '/#nightouts',
   },
 ]
 
 export default function OccasionSections() {
-    return (
-      <section>
-        {occasions.map((item, i) => (
-          <div
-            id={item.id}
-            key={item.id}
-            className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
-          >
-            {/* Image */}
-            <div className={`w-full ${i % 2 !== 0 ? 'md:order-last' : ''}`}>
-              <div className="rounded-xl overflow-hidden shadow-lg">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  width={700}
-                  height={450}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            </div>
-  
-            {/* Text */}
-            <div className="text-center md:text-left">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                {item.emoji} {item.headline}
-              </h2>
-              <p className="text-gray-600 text-lg mb-4">{item.subheadline}</p>
-              {item.testimonial && (
-                <blockquote className="italic text-sm text-gray-500 mb-4">
-                  {item.testimonial}
-                </blockquote>
-              )}
-              <Link
-                href={item.href}
-                className="inline-block bg-pink-600 text-white font-semibold px-5 py-3 rounded-md hover:bg-pink-700 transition"
-              >
-                → {item.cta}
-              </Link>
+  return (
+    <section>
+      {occasions.map((item, i) => (
+        <div
+          id={item.id}
+          key={item.id}
+          className={`max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center ${
+            i % 2 !== 0 ? 'md:flex-row-reverse' : ''
+          }`}
+        >
+          {/* Image */}
+          <div className={`w-full ${i % 2 !== 0 ? 'md:order-last' : ''}`}>
+            <div className="rounded-xl overflow-hidden shadow-lg">
+              <Image
+                src={item.image}
+                alt={item.headline}
+                width={700}
+                height={450}
+                className="w-full h-auto object-cover"
+              />
             </div>
           </div>
-        ))}
 
-<section className="bg-pink-600 text-white text-center px-6 py-20">
-  <div className="max-w-3xl mx-auto">
-    <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-      Not sure which package is right for you?
-    </h2>
-    <p className="text-lg sm:text-xl mb-8">
-      Let’s plan it together.
-    </p>
-    <a
-      href="/contact"
-      className="inline-block bg-white text-pink-600 font-semibold px-6 py-3 rounded-md hover:bg-pink-100 transition"
-    >
-      Get in Touch
-    </a>
-  </div>
-</section>
+          {/* Text */}
+          <div className="text-center md:text-left">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              {item.emoji} {item.headline}
+            </h2>
+            <p className="text-gray-600 text-lg mb-4">{item.subheadline}</p>
+            {item.testimonial && (
+              <blockquote className="italic text-sm text-gray-500 mb-4">{item.testimonial}</blockquote>
+            )}
+            <Link
+              href={item.href}
+              className="inline-block bg-pink-600 text-white font-semibold px-5 py-3 rounded-md hover:bg-pink-700 transition"
+            >
+              → {item.cta}
+            </Link>
+          </div>
+        </div>
+      ))}
+
+      {/* Final CTA Section */}
+      <section className="bg-pink-600 text-white text-center px-6 py-20">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            Not sure which package is right for you?
+          </h2>
+          <p className="text-lg sm:text-xl mb-8">Let’s plan it together.</p>
+          <a
+            href="/contact"
+            className="inline-block bg-white text-pink-600 font-semibold px-6 py-3 rounded-md hover:bg-pink-100 transition"
+          >
+            Get in Touch
+          </a>
+        </div>
       </section>
-    )
-  }
+    </section>
+  )
+}
