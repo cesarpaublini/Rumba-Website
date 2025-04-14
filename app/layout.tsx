@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import Providers from '@/components/Providers';
 import Script from 'next/script';
 import BookingBanner from '@/components/bookingPopup'   
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -44,6 +45,7 @@ export default function RootLayout({
           <Footer />
           <BookingBanner />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
