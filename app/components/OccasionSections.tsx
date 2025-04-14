@@ -69,7 +69,7 @@ const occasions = [
 export default function OccasionSections() {
   return (
     <section>
-      {occasions.map((item, i) => (
+      {occasions.map((item, i: number) => (
         <div
           id={item.id}
           key={item.id}

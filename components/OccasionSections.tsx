@@ -69,14 +69,16 @@ const occasions = [
 export default function OccasionSections() {
   return (
     <section>
-      {occasions.map((item, i) => (
-        <div
-          id={item.id}
-          key={item.id}
-          className={`max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center ${
-            i % 2 !== 0 ? 'md:flex-row-reverse' : ''
-          }`}
-        >
+      {occasions.map((item, i: number) => {
+  const isReversed = i % 2 !== 0;
+  return (
+    <div
+      id={item.id}
+      key={item.id}
+      className={`max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center ${
+        isReversed ? 'md:flex-row-reverse' : ''
+      }`}
+    >
           {/* Image */}
           <div className={`w-full ${i % 2 !== 0 ? 'md:order-last' : ''}`}>
             <div className="rounded-xl overflow-hidden shadow-lg">
