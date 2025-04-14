@@ -68,9 +68,9 @@ const occasions = [
 
 export default function OccasionSections() {
   return (
-    <section>
+    <div className="w-full">
       {occasions.map((item, i: number) => {
-        const isReversed = i % 2 !== 0;
+        const isReversed = i % 2 !== 0
         return (
           <div
             id={item.id}
@@ -107,23 +107,26 @@ export default function OccasionSections() {
               </Link>
             </div>
           </div>
-        );
+        )
       })}
+
       {/* Call-to-Action Section */}
-      <section className="bg-pink-600 text-white text-center px-6 py-16">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-          Not sure which package is right for you?
-        </h2>
-        <p className="text-lg sm:text-xl mb-6">
-          Let us plan it together.
-        </p>
-        <a
-          href="/contact"
-          className="inline-block bg-white text-pink-600 font-semibold px-6 py-3 rounded-full hover:bg-pink-100 transition"
-        >
-          Get in Touch
-        </a>
-      </section>
-    </section>
+      <div className="bg-pink-600 text-white text-center px-6 py-16">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            Not sure which package is right for you?
+          </h2>
+          <p className="text-lg sm:text-xl mb-6">
+            Let us plan it together.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-block bg-white text-pink-600 font-semibold px-6 py-3 rounded-full hover:bg-pink-100 transition"
+          >
+            Get in Touch
+          </Link>
+        </div>
+      </div>
+    </div>
   )
 } 
