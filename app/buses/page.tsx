@@ -59,9 +59,15 @@ export default function BusesPage() {
             <div className="p-4">
               <h2 className="font-semibold text-lg mb-1">{bus.name}</h2>
               <p className="text-sm text-gray-500">{bus.location}</p>
-              <p className="text-pink-600 font-bold mt-2">
-                {bus.note ? `$${bus.price} – ${bus.note}` : `$${bus.price}/hour`}
-              </p>
+              <div className="mt-2">
+                <span className="text-pink-600 font-bold">${bus.price}</span>
+                {bus.note && (
+                  <span className="text-sm text-gray-600 ml-1">({bus.note})</span>
+                )}
+                {!bus.note && (
+                  <span className="text-sm text-gray-600 ml-1">/hour</span>
+                )}
+              </div>
               <p className="text-xs text-gray-600 mt-1">
                 Capacity: {bus.capacity} guests
               </p>
