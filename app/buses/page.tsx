@@ -16,6 +16,17 @@ const buses = [
     note: 'Flat rate for 2-hour tour'
   },
   {
+    id: 'covered-open-air-party-bus',
+    name: 'Covered Open-Air Party Bus',
+    location: 'Miami, FL',
+    price: 950,
+    image: '/images/covered-open-air-party-bus.jpg',
+    capacity: 30,
+    features: ['Open-Air with Roof', 'BYOB', 'Premium Sound', 'Attendant'],
+    slug: 'covered-open-air-party-bus',
+    note: 'Flat rate for 2-hour tour'
+  },
+  {
     id: '55-passenger-bus',
     name: '55 Passenger Coach',
     location: 'Miami, FL',
