@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import CreateBookingModal from '@/components/CreateBookingModal'
 import React from 'react'
 
 const mockBookings = [
