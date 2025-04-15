@@ -17,7 +17,8 @@ export default function Home() {
       <FAQsection />
       <RiderReviewsSection />
       <BrandLogosMarquee />
-        
+      <BookingPopup />
+
     </main>
   );
 }

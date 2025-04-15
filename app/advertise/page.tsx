@@ -8,7 +8,7 @@ export default function AdvertiseWithUs() {
     <main className="font-sans">
 
       {/* Hero Section */}
-      <section className="relative w-full min-h-[80vh] flex flex-col items-center justify-center text-center overflow-hidden">
+      <section className="relative w-full min-h-[70vh] flex flex-col items-center justify-center text-center overflow-hidden">
         {/* Desktop Video */}
         <video
           className="absolute inset-0 w-full h-full object-cover hidden md:block"

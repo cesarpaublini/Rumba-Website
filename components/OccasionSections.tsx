@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 
 const occasions = [
   {
@@ -12,7 +11,6 @@ const occasions = [
     image: '/images/occasion-bachelorette.jpg',
     testimonial: 'Best night ever! The bride-to-be was obsessed! – Maria R.',
     cta: 'Book Your Bachelorette Party Now',
-    href: '/#bachelorettes'
   },
   {
     id: 'birthdays',
@@ -22,7 +20,6 @@ const occasions = [
     image: '/images/occasion-birthday.jpg',
     testimonial: 'We had the time of our lives — unforgettable birthday vibes! – Luis A.',
     cta: 'Check Birthday Packages',
-    href: '/#birthdays'
   },
   {
     id: 'corporate',
@@ -32,7 +29,6 @@ const occasions = [
     image: '/images/occasion-corporate.jpg',
     testimonial: 'Our team loved it! Definitely doing it again next quarter. – Pepsi Miami Team',
     cta: 'Book a Corporate Ride',
-    href: '/#corporate'
   },
   {
     id: 'weddings',
@@ -42,7 +38,6 @@ const occasions = [
     image: '/images/occasion-wedding.jpg',
     testimonial: 'So easy and beautiful. They handled everything flawlessly. – Vanessa & Erik',
     cta: 'Reserve for Your Wedding',
-    href: '/#weddings'
   },
   {
     id: 'proms',
@@ -52,7 +47,6 @@ const occasions = [
     image: '/images/occasion-prom.jpg',
     testimonial: 'Safe, super fun, and the kids LOVED it. – Carlos G., Parent',
     cta: 'Prom Bus Availability',
-    href: '/#proms'
   },
   {
     id: 'nightouts',
@@ -62,7 +56,6 @@ const occasions = [
     image: '/images/occasion-nightout.jpg',
     testimonial: 'Best way to bar hop without worrying about parking or Ubers. – Nicole & Crew',
     cta: 'Plan Your Night Out',
-    href: '/#nightouts'
   }
 ]
 
@@ -99,12 +92,14 @@ export default function OccasionSections() {
               {item.testimonial && (
                 <blockquote className="italic text-sm text-gray-500 mb-4">{item.testimonial}</blockquote>
               )}
-              <Link
-                href={item.href}
+              <a
+                href="https://book.tourcheckout.com/s/2cdc-68f6-621b/041a25"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block bg-pink-600 text-white font-semibold px-5 py-3 rounded-md hover:bg-pink-700 transition"
               >
                 → {item.cta}
-              </Link>
+              </a>
             </div>
           </div>
         )
@@ -119,12 +114,12 @@ export default function OccasionSections() {
           <p className="text-lg sm:text-xl mb-6">
             Let us plan it together.
           </p>
-          <Link
+          <a
             href="/contact"
             className="inline-block bg-white text-pink-600 font-semibold px-6 py-3 rounded-full hover:bg-pink-100 transition"
           >
             Get in Touch
-          </Link>
+          </a>
         </div>
       </div>
     </div>

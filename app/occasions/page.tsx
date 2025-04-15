@@ -8,8 +8,7 @@ export default function OccasionsPage() {
     <>
       {/* Hero Section */}
       <section
-        className="relative w-full min-h-[60vh] sm:min-h-[70vh] md:min-h-[5
-        0vh] flex flex-col items-center justify-center text-center bg-cover bg-center px-4 py-12 sm:py-20"
+        className="relative w-full min-h-[40vh] sm:min-h-[40vh] md:min-h-[40vh] flex flex-col items-center justify-center text-center bg-cover bg-center px-4 py-12 sm:py-20"
         style={{
           backgroundImage: "url('/images/rumba-miami-party-bus-background-pattern.png')",
         }}
@@ -32,7 +31,6 @@ export default function OccasionsPage() {
       {/* Occasion Cards Section */}
       <section className="max-w-7xl mx-auto px-6 py-12">
         <OccasionSlider />
-      
       </section>
 
       <OccasionSections />
