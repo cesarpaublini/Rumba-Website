@@ -28,7 +28,7 @@ const reviews = [
 
 function ReviewCard({ review }: { review: { name: string; text: string } }) {
   return (
-    <div className="min-w-[300px] md:max-w-sm flex-shrink-0 bg-gray-100 rounded-xl shadow p-4 min-w-0">
+    <div className="md:max-w-sm flex-shrink-0 bg-gray-100 rounded-xl shadow p-4 min-w-0">
       <div className="flex items-center gap-3 mb-2">
         <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
           {review.name[0]}
