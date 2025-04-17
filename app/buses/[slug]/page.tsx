@@ -51,10 +51,11 @@ export default function BusDetailPage() {
 
           {/* Thumbnail Images */}
           <div className="flex gap-4 mt-4">
-            {['/images/bus1.jpg', '/images/bus2.jpg', '/images/bus3.jpg'].map((img, i) => (
+            {/* Using a consistent placeholder for thumbnails */}
+            {Array.from({ length: 3 }).map((_, i) => (
               <Image
                 key={i}
-                src={img}
+                src={'/images/30-passenger-party-bus-miami.jpg'} // Consistent placeholder
                 alt={`Thumbnail ${i + 1}`}
                 width={100}
                 height={70}
