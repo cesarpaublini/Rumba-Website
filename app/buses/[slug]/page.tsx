@@ -2,9 +2,15 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import { 
+  FiChevronLeft, FiChevronRight, FiMusic, FiThermometer, FiUser, FiZap, FiTv, FiSun, FiWind, FiUsers, FiSpeaker, FiTool, FiDroplet, FiCloudSnow, FiStar, FiPackage
+} from 'react-icons/fi'; // More specific icons if available
+import { FaStar, FaRegStar } from 'react-icons/fa'; // For review stars
 
 // TODO: Fetch bus data based on slug
 const bus = {
+  id: '30-party-bus', // Added ID
   name: '30 Passenger Party Bus', // Placeholder
   location: 'Miami, FL', // Placeholder
   price: 285, // Placeholder
@@ -21,7 +27,53 @@ const bus = {
   bookingLink: 'https://book.tourcheckout.com/s/2cdc-68f6-621b/041a25', // Placeholder
 };
 
+const detailedAmenities = [
+  { name: 'Bluetooth Audio', icon: FiMusic },
+  { name: 'Air Conditioning', icon: FiThermometer },
+  { name: 'Cooler Provided', icon: FiTool }, // Example icon
+  { name: 'Ice Available', icon: FiCloudSnow }, // Example icon
+  { name: 'Professional Driver', icon: FiUser },
+  { name: 'LED Lights', icon: FiZap },
+  { name: 'Comfortable Seating', icon: FiUsers },
+  { name: 'Sleek Black Exterior', icon: FiSun }, // Placeholder icon
+  { name: 'TV Screen', icon: FiTv },
+];
+
+const reviews = [
+  { id: 1, author: 'Jessica L.', rating: 5, text: 'Amazing experience! The bus was clean, the driver was professional, and the sound system was fantastic. Highly recommend!' },
+  { id: 2, author: 'Mark T.', rating: 4, text: 'Great time for our bachelor party. The LED lights set the mood. Only downside was traffic, but that's Miami!' },
+  { id: 3, author: 'Samantha P.', rating: 5, text: 'Used Rumbatours for my bachelorette. So much fun! The open-air option was perfect for the weather.' },
+  { id: 4, author: 'David R.', rating: 5, text: 'Flawless booking and service. The bus was exactly as pictured. Will definitely use them again.' },
+];
+
 export default function BusDetailPage() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+
+  const sliderImages = bus.images.slice(1); // Exclude the main image
+
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % sliderImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + sliderImages.length) % sliderImages.length);
+  };
+
+  const nextReview = () => {
+    setCurrentReviewIndex((prevIndex) => (prevIndex + 1) % reviews.length);
+  };
+
+  const prevReview = () => {
+    setCurrentReviewIndex((prevIndex) => (prevIndex - 1 + reviews.length) % reviews.length);
+  };
+
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => 
+      i < rating ? <FaStar key={i} className="text-yellow-400" /> : <FaRegStar key={i} className="text-gray-300" />
+    );
+  };
+
   return (
     <main className="max-w-7xl mx-auto px-4 py-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
