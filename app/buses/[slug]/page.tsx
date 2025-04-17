@@ -35,12 +35,15 @@ export default function BusDetailPage() {
         </div>
 
         {/* Info + Booking */}
-        <div className="flex flex-col">
+        <div className="flex flex-col justify-between">
           <div>
             <h1 className="text-3xl sm:text-4xl font-bold mb-2">
               30 Passenger Party Bus
             </h1>
             <p className="text-gray-500 mb-2">Miami, FL</p>
+            <p className="text-pink-600 text-xl font-semibold mb-4">
+              $285 <span className="text-sm font-normal text-gray-500">/ hour</span>
+            </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
               <div>
@@ -76,31 +79,16 @@ export default function BusDetailPage() {
             </ul>
           </div>
 
-          {/* Right Side Booking Box */}
-          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-sm mx-auto lg:mx-0 mt-10 lg:mt-0">
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              $285 <span className="text-sm font-medium text-gray-500">/ hour</span>
-            </h3>
-            
-            <div className="mb-4">
-              <p className="text-sm text-gray-700">
-                <strong>Location:</strong> Miami, FL
-              </p>
-              <p className="text-sm text-gray-700 mt-1">
-                <strong>Capacity:</strong> 30 guests
-              </p>
-            </div>
-
-            <Link
+          {/* CTA */}
+          <div className="sticky bottom-0 bg-white p-4 border-t flex justify-center lg:static lg:p-8 mt-6">
+            <a
               href="https://book.tourcheckout.com/s/2cdc-68f6-621b/041a25"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-center bg-pink-600 hover:bg-pink-700 text-white font-semibold px-4 py-3 rounded-lg transition w-full mt-4"
+              className="w-full text-center bg-pink-600 text-white font-semibold py-3 px-6 rounded-md hover:bg-pink-700 transition lg:w-auto"
             >
-              ⚡ Book Now
-            </Link>
-
-            <p className="text-xs text-gray-400 text-center mt-3">You won't be charged yet</p>
+              🚐 Book Now
+            </a>
           </div>
         </div>
       </div>
