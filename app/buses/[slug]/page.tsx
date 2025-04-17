@@ -28,7 +28,7 @@ const reviews = [
 
 function ReviewCard({ review }: { review: { name: string; text: string } }) {
   return (
-    <div className="min-w-[300px] md:max-w-sm flex-shrink-0 bg-gray-100 rounded-xl shadow p-4">
+    <div className="min-w-[300px] md:max-w-sm flex-shrink-0 bg-gray-100 rounded-xl shadow p-4 min-w-0">
       <div className="flex items-center gap-3 mb-2">
         <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
           {review.name[0]}
@@ -38,7 +38,7 @@ function ReviewCard({ review }: { review: { name: string; text: string } }) {
       <div className="flex text-yellow-400 text-sm mb-2">
         {[...Array(5)].map((_, i) => <FaStar key={i} />)}
       </div>
-      <p className="text-sm text-gray-800">{review.text}</p>
+      <p className="text-sm text-gray-800 break-words">{review.text}</p>
     </div>
   );
 }
@@ -105,7 +105,21 @@ export default function BusDetailPage() {
       {/* Reviews Section */}
       <section className="mt-16 px-2">
         <h2 className="text-2xl md:text-3xl font-bold mb-8">Ratings & Reviews</h2>
-        <div className="flex gap-4 overflow-x-auto pb-4">
+        <div
+          className="hidden md:flex md:flex-row gap-6 md:overflow-x-auto md:pb-4 md:pr-2 scroll-smooth min-w-0"
+          onWheel={(e) => {
+            const container = e.currentTarget;
+            if (e.deltaY !== 0) {
+              container.scrollLeft += e.deltaY;
+              e.preventDefault();
+            }
+          }}
+        >
+          {reviews.map((review, index) => (
+            <ReviewCard key={index} review={review} />
+          ))}
+        </div>
+        <div className="md:hidden flex gap-4 overflow-x-auto pb-4">
           {reviews.map((review, index) => (
             <ReviewCard key={index} review={review} />
           ))}
