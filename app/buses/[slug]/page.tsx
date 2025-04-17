@@ -48,6 +48,20 @@ export default function BusDetailPage() {
               ▶
             </button>
           </div>
+
+          {/* Thumbnail Images */}
+          <div className="flex gap-4 mt-4">
+            {['/images/bus1.jpg', '/images/bus2.jpg', '/images/bus3.jpg'].map((img, i) => (
+              <Image
+                key={i}
+                src={img}
+                alt={`Thumbnail ${i + 1}`}
+                width={100}
+                height={70}
+                className="rounded-lg cursor-pointer hover:opacity-75 transition object-cover"
+              />
+            ))}
+          </div>
         </div>
 
         {/* Right Content */}
