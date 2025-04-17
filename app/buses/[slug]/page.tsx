@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { FaStar } from 'react-icons/fa';
 
 const images = [
   '/images/30-passenger-party-bus-miami.jpg',
@@ -10,21 +11,47 @@ const images = [
   '/images/30-passenger-party-bus-miami.jpg'
 ];
 
+const reviews = [
+  {
+    name: 'Karen Sacasa',
+    text: "I celebrated my 27th birthday with Rumba Tours last December, and I can't even describe how much fun we had that day! I chose their enclosed bus, which was clean, punctual, and very spacious..."
+  },
+  {
+    name: 'Betty G',
+    text: 'The tour was great - thanks to our host and our driver. Fun time driving around parts of the beach and Wynwood...'
+  },
+  {
+    name: 'Veronica P',
+    text: 'Fun time celebrating a birthday! It was an open-air bus with plenty of room for ~20 people to hang and dance...'
+  }
+];
+
+function ReviewCard({ review }: { review: { name: string; text: string } }) {
+  return (
+    <div className="min-w-[300px] md:max-w-sm flex-shrink-0 bg-gray-100 rounded-xl shadow p-4">
+      <div className="flex items-center gap-3 mb-2">
+        <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
+          {review.name[0]}
+        </div>
+        <h3 className="text-md font-semibold">{review.name}</h3>
+      </div>
+      <div className="flex text-yellow-400 text-sm mb-2">
+        {[...Array(5)].map((_, i) => <FaStar key={i} />)}
+      </div>
+      <p className="text-sm text-gray-800">{review.text}</p>
+    </div>
+  );
+}
+
 export default function BusDetailPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nextImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
+  const nextImage = () => setCurrentIndex((prev) => (prev + 1) % images.length);
+  const prevImage = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-        {/* Left Image Carousel */}
         <div className="h-full w-full">
           <div className="w-full aspect-[16/9] relative rounded-lg overflow-hidden shadow-md mb-4">
             <Image
@@ -33,63 +60,18 @@ export default function BusDetailPage() {
               fill
               className="object-cover"
             />
-            <button
-              onClick={prevImage}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white text-black px-2 py-1 rounded-full shadow hover:bg-gray-100 transition"
-              aria-label="Previous Image"
-            >
-              ◀
-            </button>
-            <button
-              onClick={nextImage}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white text-black px-2 py-1 rounded-full shadow hover:bg-gray-100 transition"
-              aria-label="Next Image"
-            >
-              ▶
-            </button>
-          </div>
-
-          {/* Thumbnail Images */}
-          <div className="flex gap-4 mt-4">
-            {/* Using a consistent placeholder for thumbnails */}
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Image
-                key={i}
-                src={'/images/30-passenger-party-bus-miami.jpg'} // Consistent placeholder
-                alt={`Thumbnail ${i + 1}`}
-                width={100}
-                height={70}
-                className="rounded-lg cursor-pointer hover:opacity-75 transition object-cover"
-              />
-            ))}
+            <button onClick={prevImage} className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white text-black px-2 py-1 rounded-full shadow hover:bg-gray-100 transition">◀</button>
+            <button onClick={nextImage} className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white text-black px-2 py-1 rounded-full shadow hover:bg-gray-100 transition">▶</button>
           </div>
         </div>
 
-        {/* Right Content */}
         <div className="h-full border border-gray-200 rounded-lg p-6 flex flex-col justify-between">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-              30 Passenger Party Bus
-            </h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-2">30 Passenger Party Bus</h1>
             <p className="text-gray-500 mb-2">Miami, FL</p>
             <p className="text-pink-600 text-xl font-semibold mb-4">
               $285 <span className="text-sm font-normal text-gray-500">/ hour</span>
             </p>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
-              <div>
-                <p className="text-sm text-gray-500">Length</p>
-                <p className="font-semibold">25 ft</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">Capacity</p>
-                <p className="font-semibold">30 Guests</p>
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">A/C</p>
-                <p className="font-semibold">Yes</p>
-              </div>
-            </div>
 
             <h3 className="text-lg font-semibold mb-2">Description</h3>
             <p className="text-gray-700 mb-6">
@@ -99,12 +81,9 @@ export default function BusDetailPage() {
 
             <h3 className="text-lg font-semibold mb-2">Amenities</h3>
             <ul className="flex flex-wrap gap-2 text-sm mb-8">
-              {['Premium Sound', 'LED Lights', 'Open-Air Option', 'BYOB', 'Bluetooth Audio'].map((amenity, idx) => (
-                <li
-                  key={idx}
-                  className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full"
-                >
-                  {amenity}
+              {['Premium Sound', 'LED Lights', 'Open-Air Option', 'BYOB', 'Bluetooth Audio'].map((item, i) => (
+                <li key={i} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
+                  {item}
                 </li>
               ))}
             </ul>
@@ -122,6 +101,16 @@ export default function BusDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* Reviews Section */}
+      <section className="mt-16 px-2">
+        <h2 className="text-2xl md:text-3xl font-bold mb-8">Ratings & Reviews</h2>
+        <div className="flex gap-4 overflow-x-auto pb-4">
+          {reviews.map((review, index) => (
+            <ReviewCard key={index} review={review} />
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
