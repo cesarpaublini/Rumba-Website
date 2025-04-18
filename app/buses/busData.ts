@@ -1,23 +1,6 @@
 // app/buses/busData.ts
 export const buses = [
   {
-    slug: '30-passenger-party-bus',
-    name: '30 Passenger Party Bus',
-    capacity: 30,
-    imageGallery: [
-      '/images/30-passenger-party-bus-miami.jpg',
-      '/images/30-passenger-party-bus-miami.jpg', // Placeholder, replace with actual gallery images
-      '/images/30-passenger-party-bus-miami.jpg'  // Placeholder
-    ],
-    price: 285,
-    unit: '/hour',
-    description:
-      'Our 30 Passenger Party Bus is the perfect ride for birthdays, corporate events, and nights out. It features premium lighting, sound system, and BYOB-friendly setup.',
-    location: 'Miami, FL',
-    amenities: ['Premium Sound', 'LED Lights', 'Open-Air Option', 'BYOB', 'Bluetooth Audio'],
-    bookingLink: 'https://book.tourcheckout.com/s/2cdc-68f6-621b/041a25'
-  },
-  {
     slug: 'open-air-party-bus',
     name: 'Open-Air Party Bus',
     capacity: 30,
@@ -33,6 +16,23 @@ export const buses = [
     location: 'Miami, FL',
     amenities: ['Open air', 'BYOB', 'Bluetooth Sound', 'Attendant'],
     bookingLink: 'https://book.tourcheckout.com/s/2cdc-68f6-621b/041a25' // Example, replace if needed
+  },
+  {
+    slug: '30-passenger-party-bus',
+    name: '30 Passenger Party Bus',
+    capacity: 30,
+    imageGallery: [
+      '/images/30-passenger-party-bus-miami.jpg',
+      '/images/30-passenger-party-bus-miami-2.jpg', // Placeholder, replace with actual gallery images
+      '/images/30-passenger-party-bus-miami-3.jpg'  // Placeholder
+    ],
+    price: 285,
+    unit: '/hour',
+    description:
+      'Our 30 Passenger Party Bus is the perfect ride for birthdays, corporate events, and nights out. It features premium lighting, sound system, and BYOB-friendly setup.',
+    location: 'Miami, FL',
+    amenities: ['Premium Sound', 'LED Lights', 'Open-Air Option', 'BYOB', 'Bluetooth Audio'],
+    bookingLink: 'https://book.tourcheckout.com/s/2cdc-68f6-621b/041a25'
   },
   {
     slug: 'covered-open-air-party-bus',
