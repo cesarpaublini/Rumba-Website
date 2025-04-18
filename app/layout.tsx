@@ -5,8 +5,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Providers from '@/components/Providers';
 import Script from 'next/script';
-import BookingBanner from '@/components/bookingPopup'   
-import { Analytics } from "@vercel/analytics/react"
+import BookingBanner from '@/components/bookingPopup';
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -59,6 +60,7 @@ export default function RootLayout({
           <BookingBanner />
         </Providers>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
