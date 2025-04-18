@@ -37,6 +37,8 @@ export default function RootLayout({
             })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
           `}
         </Script>
+
+        {/* Tour Checkout Button */}
         <Script id="tourcheckout" strategy="beforeInteractive">
           {`
             (function(config) {
@@ -49,6 +51,20 @@ export default function RootLayout({
               elem.src = basePath + '/' + 'tcloader.js';
               head.appendChild(elem);
             })({key: '2cdc-68f6-621b'});
+          `}
+        </Script>
+
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-S1H7NHT8EQ"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-S1H7NHT8EQ');
           `}
         </Script>
       </head>
